@@ -63,7 +63,7 @@
                 <li><a><i class="fa fa-gear"></i> Ayarlar <span class="fa fa-chevron-down"></span></a>
 
                   <ul class="nav child_menu">
-                    <li><a href="index.html">Genel Ayarlar</a></li>
+                    <li><a href="genel-ayar.php">Genel Ayarlar</a></li>
 
                   </ul>
 
