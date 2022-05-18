@@ -1,13 +1,16 @@
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond $1 !^(css|js|images|inc|lang)
+RewriteEngine on
 
 
-#Sabit sayfalar için oluşturmamız gereken yapı aşağıdaki gibidir.(anasayfa yazdığımızda index.php sayfasını çağır)
+#RewriteCond %{SERVER_PORT} 80
+#RewriteRule ^(.*) http:www.site_adi.com/$1 [R,L]
 
-RewriteRule ^anasayfa/? index.php [NC,L]
-RewriteRule ^hakkimizda/? hakkimizda.php [NC,L]
+#RewriteCond %{HTTP_HOST} ^site_adi.com. [NC]
+#RewriteRule ^(.*)$ http:www.site_adi.com/$1 [L,R=301,NC]
 
-# Dinamik sayfalar için  0-9 ve a-z arasındaki karakterler için ([0-9a-zA-Z-_]+) bu yapıyı ve id=1 icin  0-9 arası rakamlardan oluşan karakterler seçilmeli ([0-9]+) bu şekilde oluşturup hizmetlerimiz.php?id= sayfasını çağırmalıyız.
+#Seo url oluşturma
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php
 
-RewriteRule ^hizmetlerimiz/([0-9a-zA-Z-_]+)/([0-9]+)? hizmetlerimiz.php?id=$2 [L,QSA]
+#404 hata sayfası yönlendirme kodu
+ErrorDocument 404 www.site_adi.com
