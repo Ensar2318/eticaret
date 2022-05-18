@@ -1,3 +1,11 @@
+<?php
+require_once '../nesting/baglan.php';
+$ayarsor = $db->prepare("SELECT * FROM ayar where ayar_id=:id");
+$ayarsor->execute([
+  'id' => 0
+]);
+$ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +16,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>DataTables | Gentelella</title>
+  <title>Deku | E-ticaret</title>
 
   <!-- Bootstrap -->
   <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,6 +35,9 @@
 
   <!-- Custom Theme Style -->
   <link href="../build/css/custom.min.css" rel="stylesheet">
+
+  <!-- Ck Editör -->
+  <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 </head>
 
 <body class="nav-md">
@@ -35,7 +46,7 @@
       <div class="col-md-3 left_col">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
-            <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+            <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Deku Ticaret</span></a>
           </div>
 
           <div class="clearfix"></div>
@@ -60,19 +71,23 @@
               <h3>General</h3>
               <ul class="nav side-menu">
                 <li><a href="index.php"><i class="fa fa-home"></i> Anasayfa</a></li>
-                <li><a><i class="fa fa-gear"></i> Ayarlar <span class="fa fa-chevron-down"></span></a>
+                <li><a href="hakkimizda.php"><i class="fa fa-info"></i> Hakkımızda</a></li>
+                <li><a><i class="fa fa-gear"></i> Site Ayarları <span class="fa fa-chevron-down"></span></a>
 
                   <ul class="nav child_menu">
                     <li><a href="genel-ayar.php">Genel Ayarlar</a></li>
-
+                    <li><a href="iletisim-ayar.php">İletişim Ayarlar</a></li>
+                    <li><a href="api-ayar.php">Api Ayarlar</a></li>
+                    <li><a href="sosyal-ayar.php">Sosyal Ayarlar</a></li>
+                    <li><a href="mail-ayar.php">Mail Ayarlar</a></li>
                   </ul>
 
                 </li>
-              
-              
+
+
               </ul>
             </div>
-       
+
 
           </div>
           <!-- /sidebar menu -->

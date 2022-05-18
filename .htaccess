@@ -1,0 +1,13 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond $1 !^(css|js|images|inc|lang)
+
+
+#Sabit sayfalar için oluşturmamız gereken yapı aşağıdaki gibidir.(anasayfa yazdığımızda index.php sayfasını çağır)
+
+RewriteRule ^anasayfa/? index.php [NC,L]
+RewriteRule ^hakkimizda/? hakkimizda.php [NC,L]
+
+# Dinamik sayfalar için  0-9 ve a-z arasındaki karakterler için ([0-9a-zA-Z-_]+) bu yapıyı ve id=1 icin  0-9 arası rakamlardan oluşan karakterler seçilmeli ([0-9]+) bu şekilde oluşturup hizmetlerimiz.php?id= sayfasını çağırmalıyız.
+
+RewriteRule ^hizmetlerimiz/([0-9a-zA-Z-_]+)/([0-9]+)? hizmetlerimiz.php?id=$2 [L,QSA]
