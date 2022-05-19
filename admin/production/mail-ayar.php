@@ -47,41 +47,41 @@ require_once 'header.php';
 
             <form action="../nesting/islem.php" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Site Başlığı <span class="required">*</span>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mail Smtphost <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input value="<?php echo $ayarcek['ayar_title'] ?>" name="ayar_title" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                  <input value="<?php echo $ayarcek['ayar_smtphost'] ?>" name="ayar_smtphost" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Site Açıklaması <span class="required">*</span>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mail Smtpuser <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input value="<?php echo $ayarcek['ayar_description'] ?>" name="ayar_description" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                  <input value="<?php echo $ayarcek['ayar_smtpuser'] ?>" name="ayar_smtpuser" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Site Anahtar Kelime <span class="required">*</span>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mail Smtp Password <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input value="<?php echo $ayarcek['ayar_keywords'] ?>" name="ayar_keywords" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                  <input value="<?php echo $ayarcek['ayar_smtppassword'] ?>" name="ayar_smtppassword" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Site Yazar <span class="required">*</span>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mail Smtpport <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input value="<?php echo $ayarcek['ayar_author'] ?>" name="ayar_author" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                  <input value="<?php echo $ayarcek['ayar_smtpport'] ?>" name="ayar_smtpport" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 
               <div class="ln_solid"></div>
               <div class="form-group">
                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 text-right">
-                  <button type="submit" name="genelayarkaydet" class="btn btn-success">Güncelle</button>
+                  <button type="submit" name="mailayarkaydet" class="btn btn-success">Güncelle</button>
 
                 </div>
               </div>

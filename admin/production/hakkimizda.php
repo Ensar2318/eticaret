@@ -1,7 +1,13 @@
 <?php
 require_once 'header.php';
 
+$hakkimizdasor = $db->prepare("SELECT * FROM hakkimizda where hakkimizda_id=:id");
+$hakkimizdasor->execute([
+  'id' => 0
+]);
+$hakkimizdacek = $hakkimizdasor->fetch(PDO::FETCH_ASSOC);
 ?>
+
 <!-- page content -->
 <div class="right_col" role="main">
   <div class="">
@@ -10,7 +16,7 @@ require_once 'header.php';
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>Genel Ayarlar
+            <h2>Hakkımızda Ayarları 
               <small>
                 <?php if (isset($_GET["durum"])) { ?>
                   <?php if ($_GET["durum"] == "ok") { ?>
@@ -47,41 +53,61 @@ require_once 'header.php';
 
             <form action="../nesting/islem.php" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Site Başlığı <span class="required">*</span>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Başlık <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input value="<?php echo $ayarcek['ayar_title'] ?>" name="ayar_title" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                  <input value="<?php echo $hakkimizdacek['hakkimizda_baslik'] ?>" name="hakkimizda_baslik" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Site Açıklaması <span class="required">*</span>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">İçerik <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input value="<?php echo $ayarcek['ayar_description'] ?>" name="ayar_description" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                  <textarea name="hakkimizda_icerik" id="icerik1" class="form-control col-md-7 col-xs-12" required="required">
+                  <?php echo $hakkimizdacek['hakkimizda_icerik'] ?>
+                  </textarea>
+                </div>
+                <script>
+                  ClassicEditor
+                    .create(document.querySelector('#icerik1'))
+                    .then(editor => {
+
+                    })
+                    .catch(error => {
+
+                    });
+                </script>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Video Link <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input value="<?php echo $hakkimizdacek['hakkimizda_video'] ?>" name="hakkimizda_video" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Site Anahtar Kelime <span class="required">*</span>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Vizyon<span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input value="<?php echo $ayarcek['ayar_keywords'] ?>" name="ayar_keywords" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                  <input value="<?php echo $hakkimizdacek['hakkimizda_vizyon'] ?>" name="hakkimizda_vizyon" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Site Yazar <span class="required">*</span>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Misyon<span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input value="<?php echo $ayarcek['ayar_author'] ?>" name="ayar_author" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                  <input value="<?php echo $hakkimizdacek['hakkimizda_misyon'] ?>" name="hakkimizda_misyon" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 
               <div class="ln_solid"></div>
               <div class="form-group">
                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 text-right">
-                  <button type="submit" name="genelayarkaydet" class="btn btn-success">Güncelle</button>
+                  <button type="submit" name="hakkimizdakaydet" class="btn btn-success">Güncelle</button>
 
                 </div>
               </div>

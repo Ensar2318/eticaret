@@ -1,3 +1,31 @@
+<?php
+ob_start();
+session_start();
+require_once '../nesting/baglan.php';
+//belirli kişiyi id ye göre secilme işlemi
+$ayarsor = $db->prepare("SELECT * FROM ayar where ayar_id=:id");
+$ayarsor->execute([
+  'id' => 0
+]);
+$ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
+
+// Maile göre kişinin bilgilerini alma
+$kullanicisor = $db->prepare("SELECT * FROM kullanici where kullanici_mail=:mail");
+$kullanicisor->execute([
+  'mail' => $_SESSION['kullanici_mail']
+]);
+
+$say = $kullanicisor->rowCount();
+
+$kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
+
+// Kullanıcı giriş yapmadıysa atma işlemi 
+if(!$say){
+  header('location:login.php?durum=izinsiz');
+  exit;
+}
+//
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +36,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>DataTables | Gentelella</title>
+  <title>Deku | E-ticaret</title>
 
   <!-- Bootstrap -->
   <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,6 +55,9 @@
 
   <!-- Custom Theme Style -->
   <link href="../build/css/custom.min.css" rel="stylesheet">
+
+  <!-- Ck Editör -->
+  <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 </head>
 
 <body class="nav-md">
@@ -35,7 +66,7 @@
       <div class="col-md-3 left_col">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
-            <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+            <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Deku Ticaret</span></a>
           </div>
 
           <div class="clearfix"></div>
@@ -46,8 +77,8 @@
               <img src="images/img.jpg" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
-              <span>Welcome,</span>
-              <h2>John Doe</h2>
+              <span>hoşgeldiniz,</span>
+              <h2><?php echo $kullanicicek['kullanici_adsoyad']; ?></h2>
             </div>
           </div>
           <!-- /menu profile quick info -->
@@ -60,19 +91,24 @@
               <h3>General</h3>
               <ul class="nav side-menu">
                 <li><a href="index.php"><i class="fa fa-home"></i> Anasayfa</a></li>
-                <li><a><i class="fa fa-gear"></i> Ayarlar <span class="fa fa-chevron-down"></span></a>
+                <li><a href="hakkimizda.php"><i class="fa fa-info"></i> Hakkımızda</a></li>
+                <li><a href="kullanici.php"><i class="fa fa-user"></i> Kullanıcılar</a></li>
+                <li><a><i class="fa fa-gear"></i> Site Ayarları <span class="fa fa-chevron-down"></span></a>
 
                   <ul class="nav child_menu">
                     <li><a href="genel-ayar.php">Genel Ayarlar</a></li>
-
+                    <li><a href="iletisim-ayar.php">İletişim Ayarlar</a></li>
+                    <li><a href="api-ayar.php">Api Ayarlar</a></li>
+                    <li><a href="sosyal-ayar.php">Sosyal Ayarlar</a></li>
+                    <li><a href="mail-ayar.php">Mail Ayarlar</a></li>
                   </ul>
 
                 </li>
-              
-              
+
+
               </ul>
             </div>
-       
+
 
           </div>
           <!-- /sidebar menu -->
@@ -107,19 +143,12 @@
             <ul class="nav navbar-nav navbar-right">
               <li class="">
                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                  <img src="images/img.jpg" alt="">John Doe
+                  <img src="images/img.jpg" alt=""><?php echo $kullanicicek['kullanici_adsoyad']; ?>
                   <span class=" fa fa-angle-down"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-usermenu pull-right">
-                  <li><a href="javascript:;"> Profile</a></li>
-                  <li>
-                    <a href="javascript:;">
-                      <span class="badge bg-red pull-right">50%</span>
-                      <span>Settings</span>
-                    </a>
-                  </li>
-                  <li><a href="javascript:;">Help</a></li>
-                  <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                  <li><a href="javascript:;"> Profil Bilgilerim</a></li>
+                  <li><a href="../nesting/logout.php"><i class="fa fa-sign-out pull-right"></i> Güvenli Çıkış</a></li>
                 </ul>
               </li>
 
