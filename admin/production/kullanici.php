@@ -20,7 +20,7 @@ $kullanicicek = $kullanicisor->fetchAll(PDO::FETCH_ASSOC);
                 <?php if (isset($_GET["durum"])) { ?>
                   <?php if ($_GET["durum"] == "ok") { ?>
                     <b class="text-success" role="alert">
-                      işlem başarılı...
+                      işlem başarılı....
                     </b>
                   <?php } elseif ($_GET["durum"] == "no") { ?>
                     <b class="text-danger" role="alert">
