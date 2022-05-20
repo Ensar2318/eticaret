@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: localhost
--- Üretim Zamanı: 19 May 2022, 20:05:32
+-- Üretim Zamanı: 20 May 2022, 14:17:16
 -- Sunucu sürümü: 8.0.17
 -- PHP Sürümü: 7.3.10
 
@@ -95,18 +95,18 @@ INSERT INTO `hakkimizda` (`hakkimizda_id`, `hakkimizda_baslik`, `hakkimizda_icer
 CREATE TABLE `kullanici` (
   `kullanici_id` int(11) NOT NULL,
   `kullanici_zaman` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `kullanici_resim` varchar(250) COLLATE utf8_turkish_ci NOT NULL,
-  `kullanici_tc` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
-  `kullanici_ad` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
-  `kullanici_mail` varchar(100) COLLATE utf8_turkish_ci NOT NULL,
-  `kullanici_gsm` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
-  `kullanici_password` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
-  `kullanici_adsoyad` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
-  `kullanici_adres` varchar(250) COLLATE utf8_turkish_ci NOT NULL,
-  `kullanici_il` varchar(100) COLLATE utf8_turkish_ci NOT NULL,
-  `kullanici_ilce` varchar(100) COLLATE utf8_turkish_ci NOT NULL,
-  `kullanici_unvan` varchar(100) COLLATE utf8_turkish_ci NOT NULL,
-  `kullanici_yetki` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
+  `kullanici_resim` varchar(250) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
+  `kullanici_tc` varchar(50) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
+  `kullanici_ad` varchar(50) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
+  `kullanici_mail` varchar(100) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
+  `kullanici_gsm` varchar(50) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
+  `kullanici_password` varchar(50) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
+  `kullanici_adsoyad` varchar(50) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
+  `kullanici_adres` varchar(250) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
+  `kullanici_il` varchar(100) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
+  `kullanici_ilce` varchar(100) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
+  `kullanici_unvan` varchar(100) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
+  `kullanici_yetki` varchar(50) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
   `kullanici_durum` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
@@ -115,9 +115,38 @@ CREATE TABLE `kullanici` (
 --
 
 INSERT INTO `kullanici` (`kullanici_id`, `kullanici_zaman`, `kullanici_resim`, `kullanici_tc`, `kullanici_ad`, `kullanici_mail`, `kullanici_gsm`, `kullanici_password`, `kullanici_adsoyad`, `kullanici_adres`, `kullanici_il`, `kullanici_ilce`, `kullanici_unvan`, `kullanici_yetki`, `kullanici_durum`) VALUES
-(1, '2022-05-19 07:56:16', 'qwe', '42856102448', 'ensar', 'ensar@gmail.com', '5349190288', '827ccb0eea8a706c4c34a16891f84e7b', 'Genmert akahasa', 'başakşehir dönemec sokak', 'istanbul', 'başakşehir', 'yazılımcı', '5', 1),
-(3, '2022-05-19 07:56:16', 'qwe', '42856102448', 'ensar', 'ensar@gmail.com', '5349190288', '827ccb0eea8a706c4c34a16891f84e7b', 'Political Vestern', 'başakşehir dönemec sokak', 'istanbul', 'başakşehir', 'yazılımcı', '5', 0),
-(9, '2022-05-19 07:56:16', 'qwe', '42856102448', 'melih', 'melih@gmail.com', '5349190288', '827ccb0eea8a706c4c34a16891f84e7b', 'melih Vestern', 'başakşehir dönemec sokak', 'istanbul', 'başakşehir', 'yazılımcı', '5', 0);
+(1, '2022-05-19 07:56:16', 'qwe', '42856102448', 'ensar', 'ensar@gmail.com', '5349190288', '827ccb0eea8a706c4c34a16891f84e7b', 'Genmert akahasa', 'başakşehir dönemec sokak', 'istanbul', 'başakşehir', 'yazılımcı', '5', 0),
+(3, '2022-05-19 07:56:16', 'qwe', '42856102448', 'ensar', 'ensar@gmail.com', '5349190288', '827ccb0eea8a706c4c34a16891f84e7b', 'Political Vestern', 'başakşehir dönemec sokak', 'istanbul', 'başakşehir', 'yazılımcı', '5', 1),
+(9, '2022-05-19 07:56:16', 'qwe', '42856102448', 'melih', 'melih@gmail.com', '5349190288', '827ccb0eea8a706c4c34a16891f84e7b', 'melih Vestern', 'başakşehir dönemec sokak', 'istanbul', 'başakşehir', 'yazılımcı', '5', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `menu`
+--
+
+CREATE TABLE `menu` (
+  `menu_id` int(11) NOT NULL,
+  `menu_ust` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
+  `menu_ad` varchar(100) COLLATE utf8_turkish_ci NOT NULL,
+  `menu_detay` text COLLATE utf8_turkish_ci NOT NULL,
+  `menu_url` varchar(250) COLLATE utf8_turkish_ci NOT NULL,
+  `menu_sira` int(50) NOT NULL,
+  `menu_durum` enum('0','1') COLLATE utf8_turkish_ci NOT NULL,
+  `menu_seourl` varchar(250) COLLATE utf8_turkish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+--
+-- Tablo döküm verisi `menu`
+--
+
+INSERT INTO `menu` (`menu_id`, `menu_ust`, `menu_ad`, `menu_detay`, `menu_url`, `menu_sira`, `menu_durum`, `menu_seourl`) VALUES
+(3, '0', 'hakkimizda', '<p>menu detay</p>', 'about.php', 1, '1', 'hakkimizda'),
+(4, '1', 'Detay', '<p>menu detay</p>', 'hakkimizda.php', 2, '1', 'detay'),
+(6, '1', 'katagoriler', '<p>menu detay</p>', 'hakkimizda.php', 5, '1', 'katagoriler'),
+(11, '', 'Gizlilik koşulları', '<p><strong>MediaCat Gizlilik Politikası</strong></p><p>İşbu Gizlilik Politikası’nda kullanılan “Kişisel Bilgiler” terimi sizi tanımlayabilecek isminiz, doğum tarihiniz, e-posta adresiniz veya posta adresiniz dahil fakat bunlarla sınırlı olmamak kaydıyla kredi kartı bilgileriniz, kimlik bilgileriniz gibi bilgileri ifade etmektedir.</p><p>MediaCat olarak, tüm okurlarımızın gizliliğine değer vermekte olup, bizimle paylaşılan kişisel bilgilerin gizliliği ve bilgilerin güvenliğini ile ilgili okurlarımızın kaygılarını saygıyla karşılamaktayız. Gizlilik Politikası gizliliğinizi korumak ve bilgi temininde güvenli bir deneyim sunmak için tasarlamış olup, okurların onayı olmadan kişisel bilgilerini kullanmamayı ve Kişisel Bilgilerin kullanılmasında, &nbsp;uluslararası alanda kabul edilen mahremiyet koruma standartlarına uymayı taahhüt etmektedir.</p><p>MediaCat olarak, platformu kullanmadan veya Kişisel Bilgilerinizi bize iletmeden önce mevcut Gizlilik Politikası’nı okumanızı rica ediyoruz. MediaCat, Gizlilik Politikası’nı bildirimde bulunmaksızın zaman zaman değiştirebilir veyahut da eklemelerde bulunabilir. Bu durumda Gizlilik Politikası’nın söz konusu değişiklikleri yansıtan güncellenmiş halini yükleyecektir. İşbu sebeple güncellenen Gizlilik Politikası hakkında okurların bilgi sahibi olduklarını periyodik olarak gözden geçirmesini öneririz.</p><p>MediaCat, okurlarının izniyle Kişisel Bilgileri aşağıdaki amaçlar için kullanacaktır, hiçbir durumda öngörülen amacın dışında kullanmayacaktır.</p><ul><li>Elektronik yayınlar göndermek</li><li>Elektronik posta ile bülten göndermek ya da bildirimler de bulunmak</li><li>Satın alınan ürünleri teslim etmek</li><li>Sorularınızı cevaplamak ve etkin bir müşteri hizmeti sunmak</li></ul><p>Bu amaç için elde edilen bilgiler, tamamen sizin özgür iradenizle tarafımıza sağlanmaktadır. Bu Kişisel Bilgileri bize verip vermemekte okurlar serbesttir. Ancak, okurlarımıza daha çabuk ve kaliteli hizmet sunabilmemiz için, işbu platformda okurlardan talep edilen bilgilerin tamamını vermelerini önermekteyiz. Ayrıca, talep edilen hizmetin gerektirdiği zorunlu bilgilerin verilmemesi durumunda talebin yerine getirilmesinin mümkün olamayacağını dikkatlerinize sunarız. Okurlar tarafından verilen bilgilerin doğru ve eksiksiz olması okurların sorumluluğundadır. Yanlış, yanıltıcı veya eksik bilgi verilmemesi rica olunur. Böyle bir durumda MediaCat hiçbir sorumluluk kabul etmeyecektir. Yanlış, yanıltıcı veya eksik bilgi verilmesi nedeniyle MediaCat’in bir zarara uğraması halinde bu zararı tazmin yükümlülüğü okura aittir.</p><p>Kişisel Bilgilere ek olarak platform okurlar tarafından ziyaret edildiğinde okurlar hakkında başkaca bilgiler de toplanabilir, derlenebilir. Otomatik olarak derlenen teşhis edebilirlik niteliğine sahip olmayan bu bilgiler, cookies adı verilen çeşitli teknolojiler ile derlenmektedir. Cookies, web sitesinden bilgisayarların sabit diskine aktarılan küçük çaplı metin dosyalarıdır. Bu bilgileri sitemizi, ilgilendiğiniz ve ihtiyaç duyduğunuz ürünlerimizi değiştirebilmek için toplamaktayız. Tercihen “cookies” reddetmek veya “cookie” gönderildiğinde ikaz edilmek açısından okurlar kendi web gezginlerini ayarlayabilirler.</p><p>Girilen sitede “cookie”leri reddetmek, sitenin bazı alanlarını gezmeyi veya site ziyaret edildiğinde kişiselleştirilmiş bilgilerin alınmasını engelleyebilir.</p><p>MediaCat toplanan, işlenen ve aktarılan tüm Kişisel Bilgileri korumak için gerekli teknolojik ve kurumsal önlemleri alır ve bu önlemler teknolojik gelişmeye göre sürekli güncellenir ve uyarlanır. İnternet üzerinden iletilen Kişisel Bilgiler’in gizliliği konusunda mutlak bir garanti verilmesinin söz konusu olmadığını hatırlatır, okurlarımıza internet üzerinde Kişisel Bilgiler’ini iletilirken mümkün olan en üst düzey tedbirleri almalarını tavsiye ediyoruz.</p><p>Temin edilen Kişiler Bilgiler servisin hizmet amacına yönelik olup, ilke olarak, üçüncü kişilere satılmaz, kiralanmaz ya da başka şekilde kullandırılmaz ve okurlar bizzat aksini talep etmediği sürece üçüncü kişilerle hiçbir suretle paylaşılmaz. Şu kadar ki, MediaCat yürürlükteki mevzuat uyarınca yetkili, idari ve resmi makamlardan usulüne uygun olarak talep gelmesi halinde okurların kendisinde bulunan bilgilerini ilgili yetkili makamlarla paylaşacaktır.</p><p>MediaCat vereceğiniz destek ile Kişisel Bilgilerinizi daima güncel ve doğru şekilde tutacaktır. Ancak Kişisel Bilgilerinizin silinmesi, değiştirilmesi veyahut da güncellenmesinin gerektirdiği hallerde bizimle irtibata geçmenizi ve isteklerinizi iletmenizi rica ederiz.</p><p><strong>MediaCat</strong></p><p>Kapital Medya Akmerkez E Blok Kat: 6 Etiler/İSTANBUL Telefon: 0212 282 26 40</p>', '', 6, '1', 'gizlilik-kosullari'),
+(12, '', 'iletisimss', '<p>qwrlqwirkwq</p>', 'iletisim.php', 7, '1', 'iletisimss'),
+(14, '', 'menu1', '<p>menuu 1qweqwe</p>', 'qweqwe', 0, '1', 'menu1');
 
 --
 -- Dökümü yapılmış tablolar için indeksler
@@ -142,6 +171,12 @@ ALTER TABLE `kullanici`
   ADD PRIMARY KEY (`kullanici_id`);
 
 --
+-- Tablo için indeksler `menu`
+--
+ALTER TABLE `menu`
+  ADD PRIMARY KEY (`menu_id`);
+
+--
 -- Dökümü yapılmış tablolar için AUTO_INCREMENT değeri
 --
 
@@ -150,6 +185,12 @@ ALTER TABLE `kullanici`
 --
 ALTER TABLE `kullanici`
   MODIFY `kullanici_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- Tablo için AUTO_INCREMENT değeri `menu`
+--
+ALTER TABLE `menu`
+  MODIFY `menu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

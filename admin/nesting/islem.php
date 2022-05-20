@@ -2,6 +2,7 @@
 ob_start();
 session_start();
 require_once 'baglan.php';
+require_once '../production/function.php';
 
 
 // Admin Giriş İşlemi
@@ -73,6 +74,98 @@ if (isset($_GET["kullanicisil"])) {
         exit;
     } else {
         header('location:../production/kullanici.php?durum=no');
+        exit;
+    }
+}
+
+//Menu cüzenleme islemleri
+if (isset($_POST["menuduzenle"])) {
+
+
+    $k_id = $_POST['menu_id'];
+
+    $seourl=seo($_POST['menu_ad']);
+
+    $menukaydet = $db->prepare("UPDATE menu SET
+    
+    menu_ad=:menu_ad,
+    menu_detay=:menu_detay,
+    menu_url=:menu_url,
+    menu_seourl=:menu_seourl,
+    menu_sira=:menu_sira,
+    menu_durum=:menu_durum
+    where menu_id=$k_id");
+
+    $update = $menukaydet->execute([
+        'menu_ad' => $_POST['menu_ad'],
+        'menu_detay' => $_POST['menu_detay'],
+        'menu_url' => $_POST['menu_url'],
+        'menu_seourl' => $seourl,
+        'menu_sira' => $_POST['menu_sira'],
+        'menu_durum' => $_POST['menu_durum']
+    ]);
+
+
+
+    if ($update) {
+        header("location:../production/menu-duzenle.php?durum=ok&menu_id=" . $_POST['menu_id']);
+        exit;
+    } else {
+        header("location:../production/menu-duzenle.php?durum=no&menu_id=" . $_POST['menu_id']);
+        exit;
+    }
+}
+
+if (isset($_POST["menukaydet"])) {
+
+
+    $k_id = $_POST['menu_id'];
+
+    $seourl=seo($_POST['menu_ad']);
+
+    $menukaydet = $db->prepare("INSERT INTO menu SET
+    
+    menu_ad=:menu_ad,
+    menu_detay=:menu_detay,
+    menu_url=:menu_url,
+    menu_seourl=:menu_seourl,
+    menu_sira=:menu_sira,
+    menu_durum=:menu_durum");
+
+    $update = $menukaydet->execute([
+        'menu_ad' => $_POST['menu_ad'],
+        'menu_detay' => $_POST['menu_detay'],
+        'menu_url' => $_POST['menu_url'],
+        'menu_seourl' => $seourl,
+        'menu_sira' => $_POST['menu_sira'],
+        'menu_durum' => $_POST['menu_durum']
+    ]);
+
+
+
+    if ($update) {
+        header("location:../production/menu.php?durum=ok");
+        exit;
+    } else {
+        header("location:../production/menu.php?durum=no");
+        exit;
+    }
+}
+
+//kullanıcı silme işlemi
+if (isset($_GET["menusil"])) {
+
+    $menusil = $db->prepare("DELETE FROM menu WHERE menu_id=:menu_id");
+
+    $durum = $menusil->execute([
+        'menu_id' => $_GET['menu_id']
+    ]);
+
+    if ($durum) {
+        header('location:../production/menu.php?durum=ok');
+        exit;
+    } else {
+        header('location:../production/menu.php?durum=no');
         exit;
     }
 }
