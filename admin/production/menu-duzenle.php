@@ -60,6 +60,14 @@ $menucek = $menusor->fetch(PDO::FETCH_ASSOC);
               </div>
 
               <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Sayfa Url<span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input value="<?php echo 'sayfa-'.$menucek['menu_seourl'] ?>" disabled name="menu_seourl" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                </div>
+              </div>
+
+              <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Menu Ad<span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -86,7 +94,7 @@ $menucek = $menusor->fetch(PDO::FETCH_ASSOC);
                     });
                 </script>
               </div>
-   
+
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Menu Url<span class="required">*</span>
                 </label>
@@ -95,7 +103,7 @@ $menucek = $menusor->fetch(PDO::FETCH_ASSOC);
                 </div>
               </div>
 
-              
+
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Menu Sıra<span class="required">*</span>
                 </label>

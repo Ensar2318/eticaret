@@ -2,6 +2,8 @@
 ob_start();
 session_start();
 require_once '../nesting/baglan.php';
+require_once 'function.php';
+
 //belirli kişiyi id ye göre secilme işlemi
 $ayarsor = $db->prepare("SELECT * FROM ayar where ayar_id=:id");
 $ayarsor->execute([
@@ -58,7 +60,7 @@ if (!$say) {
 
   <!-- Ck Editör -->
   <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
-  
+
 </head>
 
 <body class="nav-md">
@@ -92,11 +94,8 @@ if (!$say) {
               <h3>General</h3>
               <ul class="nav side-menu">
                 <li><a href="index.php"><i class="fa fa-home"></i> Anasayfa</a></li>
-                <li><a href="hakkimizda.php"><i class="fa fa-info"></i> Hakkımızda</a></li>
-                <li><a href="kullanici.php"><i class="fa fa-user"></i> Kullanıcılar</a></li>
-                <li><a href="menu.php"><i class="fa fa-list"></i> Menuler</a></li>
-                <li><a><i class="fa fa-gear"></i> Site Ayarları <span class="fa fa-chevron-down"></span></a>
-
+                <li>
+                  <a><i class="fa fa-gear"></i> Site Ayarları <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a href="genel-ayar.php">Genel Ayarlar</a></li>
                     <li><a href="iletisim-ayar.php">İletişim Ayarlar</a></li>
@@ -104,8 +103,11 @@ if (!$say) {
                     <li><a href="sosyal-ayar.php">Sosyal Ayarlar</a></li>
                     <li><a href="mail-ayar.php">Mail Ayarlar</a></li>
                   </ul>
-
                 </li>
+                <li><a href="hakkimizda.php"><i class="fa fa-info"></i> Hakkımızda</a></li>
+                <li><a href="kullanici.php"><i class="fa fa-user"></i> Kullanıcılar</a></li>
+                <li><a href="menu.php"><i class="fa fa-list"></i> Menuler</a></li>
+                <li><a href="slider.php"><i class="fa fa-image"></i> Slider</a></li>
 
 
               </ul>
