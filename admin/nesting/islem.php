@@ -59,7 +59,6 @@ if (isset($_POST["userkullaniciguncelle"])) {
     $kullanicikaydet = $db->prepare("UPDATE kullanici SET
 
     kullanici_adsoyad=:kullanici_adsoyad,
-    kullanici_mail=:kullanici_mail,
     kullanici_gsm=:kullanici_gsm,
     kullanici_unvan=:kullanici_unvan,
     kullanici_tc=:kullanici_tc,
@@ -71,7 +70,6 @@ if (isset($_POST["userkullaniciguncelle"])) {
 
     $update = $kullanicikaydet->execute([
         'kullanici_adsoyad' => $_POST['kullanici_adsoyad'],
-        'kullanici_mail' => $_POST['kullanici_mail'],
         'kullanici_gsm' => $_POST['kullanici_gsm'],
         'kullanici_unvan' => $_POST['kullanici_unvan'],
         'kullanici_tc' => $_POST['kullanici_tc'],
