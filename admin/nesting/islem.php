@@ -54,6 +54,43 @@ if (isset($_POST["kullanicigiris"])) {
     }
 }
 
+if (isset($_POST["userkullaniciguncelle"])) {
+    $id = $_POST["kullanici_id"];
+    $kullanicikaydet = $db->prepare("UPDATE kullanici SET
+
+    kullanici_adsoyad=:kullanici_adsoyad,
+    kullanici_mail=:kullanici_mail,
+    kullanici_gsm=:kullanici_gsm,
+    kullanici_unvan=:kullanici_unvan,
+    kullanici_tc=:kullanici_tc,
+    kullanici_adres=:kullanici_adres,
+    kullanici_il=:kullanici_il,
+    kullanici_ilce=:kullanici_ilce
+
+    where kullanici_id=$id");
+
+    $update = $kullanicikaydet->execute([
+        'kullanici_adsoyad' => $_POST['kullanici_adsoyad'],
+        'kullanici_mail' => $_POST['kullanici_mail'],
+        'kullanici_gsm' => $_POST['kullanici_gsm'],
+        'kullanici_unvan' => $_POST['kullanici_unvan'],
+        'kullanici_tc' => $_POST['kullanici_tc'],
+        'kullanici_adres' => $_POST['kullanici_adres'],
+        'kullanici_il' => $_POST['kullanici_il'],
+        'kullanici_ilce' => $_POST['kullanici_ilce']
+    ]);
+
+
+
+    if ($update) {
+        header("location:../../hesabim.php?durum=ok");
+        exit;
+    } else {
+        header("location:../../hesabim.php?durum=no");
+        exit;
+    }
+}
+
 //kullanıcı kaydetme islemleri
 if (isset($_POST["kullanicikaydet"])) {
 
@@ -92,18 +129,24 @@ if (isset($_POST["kullanicikaydet"])) {
                 ]);
 
                 if ($update) {
+                    $_SESSION['userkullanici_mail'] = $kullanici_mail;
                     header("location:../../index.php?durum=girisbasarili");
+                    exit;
                 } else {
                     header("location:../../register.php?durum=hata");
+                    exit;
                 }
             } else {
                 header("location:../../register.php?durum=kullanicivar");
+                exit;
             }
         } else {
             header("location:../../register.php?durum=eksiksifre");
+            exit;
         }
     } else {
         header("location:../../register.php?durum=farklisifre");
+        exit;
     }
 }
 
@@ -112,7 +155,6 @@ if (isset($_POST["kullaniciduzenle"])) {
 
 
     $k_id = $_POST['kullanici_id'];
-    echo print_r($_POST);
 
     $kullanicikaydet = $db->prepare("UPDATE kullanici SET
 

@@ -1,6 +1,8 @@
 ﻿<?php
 require_once 'header.php';
-
+if ($say) {
+	header('location:index.php');
+}
 ?>
 
 <div class="container">

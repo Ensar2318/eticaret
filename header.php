@@ -9,15 +9,14 @@ $ayarsor->execute([
 ]);
 $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
 
+$kullanicisor = $db->prepare("SELECT * FROM kullanici where kullanici_mail=:mail");
 if (isset($_SESSION['userkullanici_mail'])) {
-    $kullanicisor = $db->prepare("SELECT * FROM kullanici where kullanici_mail=:mail");
     $kullanicisor->execute([
         'mail' => $_SESSION['userkullanici_mail']
     ]);
-    $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
 }
-
-
+$say = $kullanicisor->rowCount();
+$kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
 
 ?>
 <!DOCTYPE html>
