@@ -78,7 +78,7 @@ if (!$say) {
 				</div>
 				<div class="form-group">
 					<div class="col-sm-12">
-						<input type="text" class="form-control" id="address" placeholder="Adres" name="kullanici_adres" value="<?php echo $kullanicicek['kullanici_tc'] ?>">
+						<input type="text" class="form-control" id="address" placeholder="Adres" name="kullanici_adres" value="<?php echo $kullanicicek['kullanici_adres'] ?>">
 					</div>
 				</div>
 				<div class="form-group dob">
