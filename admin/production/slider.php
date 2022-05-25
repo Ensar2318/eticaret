@@ -2,7 +2,7 @@
 require_once 'header.php';
 
 //bütün kisileri secme
-$slidersor = $db->prepare("SELECT * FROM slider");
+$slidersor = $db->prepare("SELECT * FROM slider ORDER BY slider_sira ASC");
 $slidersor->execute();
 $slidercek = $slidersor->fetchAll(PDO::FETCH_ASSOC);
 ?>

@@ -9,8 +9,9 @@ require_once 'header.php';
     <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
-          <div class="x_title">
+          <div class="x_title" style="display: flex; align-items: center;">
             <h2>Menu Ekleme</h2>
+            <a href="menu.php" class="btn btn-success btn-xs" style="margin: 0 20px 0 0;margin-left:auto">Geri</a>
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>
@@ -26,6 +27,7 @@ require_once 'header.php';
               <li><a class="close-link"><i class="fa fa-close"></i></a>
               </li>
             </ul>
+            
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
@@ -37,7 +39,7 @@ require_once 'header.php';
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Menu Ad<span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input placeholder="Menü adını giriniz"  name="menu_ad" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                  <input placeholder="Menü adını giriniz" name="menu_ad" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 
@@ -59,21 +61,21 @@ require_once 'header.php';
                     });
                 </script>
               </div>
-   
+
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Menu Url<span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input  placeholder="Menü Url giriniz" name="menu_url" type="text" id="first-name"class="form-control col-md-7 col-xs-12">
+                  <input placeholder="Menü Url giriniz" name="menu_url" type="text" id="first-name" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 
-              
+
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Menu Sıra<span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input  placeholder="Menü Sıra giriniz" name="menu_sira" type="number" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                  <input placeholder="Menü Sıra giriniz" name="menu_sira" type="number" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 

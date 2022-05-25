@@ -2,9 +2,9 @@
 require_once 'header.php';
 
 //bütün kisileri secme
-$menusor = $db->prepare("SELECT * FROM menu ORDER BY menu_sira ASC");
-$menusor->execute();
-$menucek = $menusor->fetchAll(PDO::FETCH_ASSOC);
+$kategorisor = $db->prepare("SELECT * FROM kategori ORDER BY kategori_sira ASC");
+$kategorisor->execute();
+$kategoricek = $kategorisor->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!-- page content -->
@@ -15,7 +15,7 @@ $menucek = $menusor->fetchAll(PDO::FETCH_ASSOC);
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div class="x_title" style="display: flex; align-items: center;">
-            <h2>Menu Listeleme
+            <h2>kategori Listeleme
               <small>
                 <?php if (isset($_GET["durum"])) { ?>
                   <?php if ($_GET["durum"] == "ok") { ?>
@@ -30,7 +30,7 @@ $menucek = $menusor->fetchAll(PDO::FETCH_ASSOC);
                 <?php } ?>
               </small>
             </h2>
-            <a href="menu-ekle.php" class="btn btn-success btn-xs" style="margin: 0 20px 0 0;margin-left:auto">Yeni Ekle</a>
+            <a href="kategori-ekle.php" class="btn btn-success btn-xs" style="margin: 0 20px 0 0;margin-left:auto">Yeni Ekle</a>
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>
@@ -53,10 +53,9 @@ $menucek = $menusor->fetchAll(PDO::FETCH_ASSOC);
               <thead>
                 <tr>
                   <th>S.No</th>
-                  <th>Menu Ad</th>
-                  <th>Menu Url</th>
-                  <th>Menu Sıra</th>
-                  <th>Menu Durum</th>
+                  <th>kategori Ad</th>
+                  <th>kategori Sıra</th>
+                  <th>kategori Durum</th>
                   <th></th>
                   <th></th>
                 </tr>
@@ -64,15 +63,14 @@ $menucek = $menusor->fetchAll(PDO::FETCH_ASSOC);
 
 
               <tbody>
-                <?php foreach ($menucek as $key => $value) { ?>
+                <?php foreach ($kategoricek as $key => $value) { ?>
                   <tr>                                                 
                     <td width='20'><?php echo $key ?></td>
-                    <td><?php echo $value['menu_ad'] ?></td>
-                    <td><?php echo $value['menu_url'] ?></td>
-                    <td><?php echo $value['menu_sira'] ?></td>
-                    <td class="text-center"><?php echo $value['menu_durum'] ? '<button class="btn btn-xs btn-success">Aktif</button>' : '<button class="btn btn-xs btn-danger">Pasif</button>' ?></td>
-                    <td class="text-center"><a href="menu-duzenle.php?menu_id=<?php echo $value['menu_id'] ?>" class="btn btn-xs btn-primary">Düzenle</a></td>
-                    <td class="text-center"><a href="../nesting/islem.php?menusil=ok&menu_id=<?php echo $value['menu_id'] ?>" class="btn btn-xs btn-danger">Sil</a></td>
+                    <td><?php echo $value['kategori_ad'] ?></td>
+                    <td><?php echo $value['kategori_sira'] ?></td>
+                    <td class="text-center"><?php echo $value['kategori_durum'] ? '<button class="btn btn-xs btn-success">Aktif</button>' : '<button class="btn btn-xs btn-danger">Pasif</button>' ?></td>
+                    <td class="text-center"><a href="kategori-duzenle.php?kategori_id=<?php echo $value['kategori_id'] ?>" class="btn btn-xs btn-primary">Düzenle</a></td>
+                    <td class="text-center"><a href="../nesting/islem.php?kategorisil=ok&kategori_id=<?php echo $value['kategori_id'] ?>" class="btn btn-xs btn-danger">Sil</a></td>
 
                   </tr>
                 <?php } ?>

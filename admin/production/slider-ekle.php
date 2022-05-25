@@ -9,8 +9,9 @@ require_once 'header.php';
     <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
-          <div class="x_title">
+          <div class="x_title" style="display: flex; align-items: center;">
             <h2>Slider Ekleme</h2>
+            <a href="slider.php" class="btn btn-success btn-xs" style="margin: 0 20px 0 0;margin-left:auto">Geri</a>
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>

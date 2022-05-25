@@ -66,7 +66,8 @@ $hakkimizdacek = $hakkimizdasor->fetch(PDO::FETCH_ASSOC);
 		</div>
 		<div class="spacer"></div>
 	</div>
+</div>
 
-	<?php
-	include_once 'footer.php'
-	?>
+<?php
+include_once 'footer.php'
+?>

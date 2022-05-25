@@ -91,6 +91,105 @@ if (isset($_POST["userkullaniciguncelle"])) {
     }
 }
 
+// Ürün düzenleme işlemleri
+if (isset($_POST["urunkaydet"])) {
+
+    $seourl = seo($_POST['urun_ad']);
+    $id = $_POST['urun_id'];
+
+    $urunkaydet = $db->prepare("INSERT INTO urun SET
+    kategori_id=:kategori_id,
+    urun_ad=:urun_ad,
+    urun_seourl=:urun_seourl,
+    urun_detay=:urun_detay,
+    urun_fiyat=:urun_fiyat,
+    urun_video=:urun_video,
+    urun_keyword=:urun_keyword,
+    urun_stok=:urun_stok,
+    urun_durum=:urun_durum");
+
+    $update = $urunkaydet->execute([
+        'kategori_id' => $_POST['kategori_id'],
+        'urun_ad' => $_POST['urun_ad'],
+        'urun_seourl' => $seourl,
+        'urun_detay' => $_POST['urun_detay'],
+        'urun_fiyat' => $_POST['urun_fiyat'],
+        'urun_video' => $_POST['urun_video'],
+        'urun_keyword' => $_POST['urun_keyword'],
+        'urun_stok' => $_POST['urun_stok'],
+        'urun_durum' => $_POST['urun_durum']
+    ]);
+
+
+
+    if ($update) {
+        header("location:../production/urun.php?durum=ok");
+        exit;
+    } else {
+        header("location:../production/urun.php?durum=no");
+        exit;
+    }
+}
+
+// Ürün düzenleme işlemleri
+if (isset($_POST["urunduzenle"])) {
+    $seourl = seo($_POST['urun_ad']);
+
+    $id = $_POST['urun_id'];
+
+    $urunkaydet = $db->prepare("UPDATE urun SET
+    kategori_id=:kategori_id,
+    urun_ad=:urun_ad,
+    urun_seourl=:urun_seourl,
+    urun_detay=:urun_detay,
+    urun_fiyat=:urun_fiyat,
+    urun_video=:urun_video,
+    urun_keyword=:urun_keyword,
+    urun_stok=:urun_stok,
+    urun_durum=:urun_durum
+    where urun_id=$id");
+
+    $update = $urunkaydet->execute([
+        'kategori_id' => $_POST['kategori_id'],
+        'urun_ad' => $_POST['urun_ad'],
+        'urun_seourl' => $seourl,
+        'urun_detay' => $_POST['urun_detay'],
+        'urun_fiyat' => $_POST['urun_fiyat'],
+        'urun_video' => $_POST['urun_video'],
+        'urun_keyword' => $_POST['urun_keyword'],
+        'urun_stok' => $_POST['urun_stok'],
+        'urun_durum' => $_POST['urun_durum']
+    ]);
+
+
+
+    if ($update) {
+        header("location:../production/urun-duzenle.php?durum=ok&urun_id=" . $_POST['urun_id']);
+        exit;
+    } else {
+        header("location:../production/urun-duzenle.php?durum=no&urun_id=" . $_POST['urun_id']);
+        exit;
+    }
+}
+
+//ürün silme işlemi
+if (isset($_GET["urunsil"])) {
+
+    $urunsil = $db->prepare("DELETE FROM urun WHERE urun_id=:urun_id");
+
+    $durum = $urunsil->execute([
+        'urun_id' => $_GET['urun_id']
+    ]);
+
+    if ($durum) {
+        header('location:../production/urun.php?durum=ok');
+        exit;
+    } else {
+        header('location:../production/urun.php?durum=no');
+        exit;
+    }
+}
+
 //kullanıcı kaydetme islemleri
 if (isset($_POST["kullanicikaydet"])) {
 
@@ -310,6 +409,85 @@ if (isset($_POST["sliderduzenle"])) {
         exit;
     }
 }
+
+//Kategori Ekleme işlemleri
+if (isset($_POST["kategoriekle"])) {
+
+    $seourl = seo($_POST['kategori_ad']);
+
+    $kategorikaydet = $db->prepare("INSERT INTO kategori SET
+    
+    kategori_ad=:kategori_ad,
+    kategori_sira=:kategori_sira,
+    kategori_seourl=:kategori_seourl,
+    kategori_durum=:kategori_durum");
+
+    $update = $kategorikaydet->execute([
+        'kategori_ad' => $_POST['kategori_ad'],
+        'kategori_seourl' => $seourl,
+        'kategori_sira' => $_POST['kategori_sira'],
+        'kategori_durum' => $_POST['kategori_durum']
+    ]);
+
+    if ($update) {
+        header("location:../production/kategori.php?durum=ok");
+        exit;
+    } else {
+        header("location:../production/kategori.php?durum=no");
+        exit;
+    }
+}
+
+
+//Kategori duzenleme işlemleri
+if (isset($_POST["kategoriduzenle"])) {
+
+    $seourl = seo($_POST['kategori_ad']);
+
+    $kategorikaydet = $db->prepare("UPDATE kategori SET
+    
+    kategori_ad=:kategori_ad,
+    kategori_sira=:kategori_sira,
+    kategori_seourl=:kategori_seourl,
+    kategori_durum=:kategori_durum
+    where kategori_id=" . $_POST['kategori_id']);
+
+    $update = $kategorikaydet->execute([
+        'kategori_ad' => $_POST['kategori_ad'],
+        'kategori_seourl' => $seourl,
+        'kategori_sira' => $_POST['kategori_sira'],
+        'kategori_durum' => $_POST['kategori_durum']
+    ]);
+
+    if ($update) {
+        header("location:../production/kategori-duzenle.php?durum=ok&kategori_id=" . $_POST['kategori_id']);
+        exit;
+    } else {
+        header("location:../production/kategori-duzenle.php?durum=no&kategori_id=" . $_POST['kategori_id']);
+        exit;
+    }
+}
+
+//Kategori silme işlemleri
+if (isset($_GET["kategorisil"])) {
+
+    $seourl = seo($_POST['kategori_ad']);
+
+    $kategorikaydet = $db->prepare("DELETE FROM kategori WHERE kategori_id=:kategori_id");
+
+    $update = $kategorikaydet->execute([
+        "kategori_id" => $_GET['kategori_id']
+    ]);
+
+    if ($update) {
+        header("location:../production/kategori.php?durum=ok");
+        exit;
+    } else {
+        header("location:../production/kategori.php?durum=no");
+        exit;
+    }
+}
+
 
 
 //Menu cüzenleme islemleri
