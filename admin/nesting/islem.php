@@ -104,7 +104,8 @@ if (isset($_POST["urunkaydet"])) {
     urun_video=:urun_video,
     urun_keyword=:urun_keyword,
     urun_stok=:urun_stok,
-    urun_durum=:urun_durum");
+    urun_durum=:urun_durum,
+    urun_onecikar=:urun_onecikar");
 
     $update = $urunkaydet->execute([
         'kategori_id' => $_POST['kategori_id'],
@@ -115,7 +116,8 @@ if (isset($_POST["urunkaydet"])) {
         'urun_video' => $_POST['urun_video'],
         'urun_keyword' => $_POST['urun_keyword'],
         'urun_stok' => $_POST['urun_stok'],
-        'urun_durum' => $_POST['urun_durum']
+        'urun_durum' => $_POST['urun_durum'],
+        'urun_onecikar' => $_POST['urun_onecikar']
     ]);
 
 
@@ -144,7 +146,8 @@ if (isset($_POST["urunduzenle"])) {
     urun_video=:urun_video,
     urun_keyword=:urun_keyword,
     urun_stok=:urun_stok,
-    urun_durum=:urun_durum
+    urun_durum=:urun_durum,
+    urun_onecikar=:urun_onecikar
     where urun_id=$id");
 
     $update = $urunkaydet->execute([
@@ -156,7 +159,9 @@ if (isset($_POST["urunduzenle"])) {
         'urun_video' => $_POST['urun_video'],
         'urun_keyword' => $_POST['urun_keyword'],
         'urun_stok' => $_POST['urun_stok'],
-        'urun_durum' => $_POST['urun_durum']
+        'urun_durum' => $_POST['urun_durum'],
+        'urun_onecikar' => $_POST['urun_onecikar']
+
     ]);
 
 

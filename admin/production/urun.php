@@ -57,6 +57,7 @@ $uruncek = $urunsor->fetchAll(PDO::FETCH_ASSOC);
                   <th>Ürün Stok</th>
                   <th>Ürün Fiyat</th>
                   <th>Ürün Durum</th>
+                  <th>Ürünü Öne Çıkar</th>
                   <th></th>
                   <th></th>
                 </tr>
@@ -71,6 +72,7 @@ $uruncek = $urunsor->fetchAll(PDO::FETCH_ASSOC);
                     <td><?php echo $value['urun_stok'] ?></td>
                     <td><?php echo $value['urun_fiyat']." $" ?></td>
                     <td class="text-center"><?php echo $value['urun_durum'] ? '<button class="btn btn-xs btn-success">Aktif</button>' : '<button class="btn btn-xs btn-danger">Pasif</button>' ?></td>
+                    <td class="text-center"><?php echo $value['urun_onecikar'] ? '<button class="btn btn-xs btn-success">Aktif</button>' : '<button class="btn btn-xs btn-danger">Pasif</button>' ?></td>
                     <td class="text-center"><a href="urun-duzenle.php?urun_id=<?php echo $value['urun_id'] ?>" class="btn btn-xs btn-primary">Düzenle</a></td>
                     <td class="text-center"><a href="../nesting/islem.php?urunsil=ok&urun_id=<?php echo $value['urun_id'] ?>" class="btn btn-xs btn-danger">Sil</a></td>
 

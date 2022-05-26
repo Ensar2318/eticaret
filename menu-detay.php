@@ -6,6 +6,11 @@ $menusor->execute([
 	'seourl' =>  $_GET['sef']
 ]);
 $menucek = $menusor->fetch(PDO::FETCH_ASSOC);
+
+if (!$menusor->rowcount()) {
+	header("Location:page_404.php");
+	exit;
+}
 ?>
 
 

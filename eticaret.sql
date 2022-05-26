@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: localhost
--- Üretim Zamanı: 25 May 2022, 15:01:36
+-- Üretim Zamanı: 26 May 2022, 15:19:19
 -- Sunucu sürümü: 8.0.17
 -- PHP Sürümü: 7.3.10
 
@@ -219,23 +219,27 @@ CREATE TABLE `urun` (
   `urun_video` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
   `urun_keyword` varchar(250) COLLATE utf8_turkish_ci NOT NULL,
   `urun_stok` int(11) NOT NULL,
-  `urun_durum` enum('0','1') COLLATE utf8_turkish_ci NOT NULL
+  `urun_durum` enum('0','1') COLLATE utf8_turkish_ci NOT NULL,
+  `urun_onecikar` enum('0','1') COLLATE utf8_turkish_ci NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 --
 -- Tablo döküm verisi `urun`
 --
 
-INSERT INTO `urun` (`urun_id`, `kategori_id`, `urun_zaman`, `urun_ad`, `urun_seourl`, `urun_detay`, `urun_fiyat`, `urun_video`, `urun_keyword`, `urun_stok`, `urun_durum`) VALUES
-(2, 9, '2022-05-25 10:52:02', 'gomlek Cetece Kontindan', 'gomlek-cetece-kontindan', '<p><strong>lorem ipsum dolor sittlorem ipsum dolor sittlorem ipsum dolor sitt</strong></p>', 200.00, 'Zk2VhA', 'karamela', 101, '1'),
-(3, 2, '2022-05-25 12:36:28', 'Allah Version 1.0', 'allah-version-1-0', '<p>the god of the empire fon the station keyframe of the man heard placehold</p>', 250.00, 'ZKAGOD', 'GODSPART', 1, '1'),
-(4, 1, '2022-05-25 12:37:41', 'Spartian Shoes', 'spartian-shoes', '<p>Spartian Shoes Flankies Band Of The Panties</p>', 750.00, '', 'Trakiens', 35, '1'),
-(5, 2, '2022-05-25 13:07:54', 'Lüks gömlek fiyaka', 'luks-gomlek-fiyaka', '<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 50.00, '', 'Kasket Video games', 99, '1'),
-(6, 9, '2022-05-25 10:52:02', 'gomlek Cetece Kontindan', 'gomlek-cetece-kontindan', '<p><strong>lorem ipsum dolor sittlorem ipsum dolor sittlorem ipsum dolor sitt</strong></p>', 200.00, 'Zk2VhA', 'karamela', 101, '1'),
-(7, 9, '2022-05-25 12:36:28', 'Allah Version 1.0', 'allah-version-1-0', '<p>the god of the empire fon the station keyframe of the man heard placehold</p>', 250.99, 'ZKAGOD', 'GODSPART', 1, '1'),
-(8, 1, '2022-05-25 12:37:41', 'mavi ayakakbı', 'mavi-ayakkabi', '<p>Spartian Shoes Flankies Band Of The Panties</p>', 750.00, '', 'Trakiens', 35, '1'),
-(10, 9, '2022-05-25 14:14:48', 'san sebastiano', 'san-sebastiano', '<p>Den peke</p>', 12.00, '', 'mastif', 1, '0'),
-(11, 8, '2022-05-25 14:33:42', 'kırmızı sapka', 'kirmizi-sapka', '<p>falan filan</p>', 150.00, '', 'sapka kırmızı', 5, '1');
+INSERT INTO `urun` (`urun_id`, `kategori_id`, `urun_zaman`, `urun_ad`, `urun_seourl`, `urun_detay`, `urun_fiyat`, `urun_video`, `urun_keyword`, `urun_stok`, `urun_durum`, `urun_onecikar`) VALUES
+(2, 9, '2022-05-25 10:52:02', 'gomlek Cetece Kontindan', 'gomlek-cetece-kontindan', '<p><strong>lorem ipsum dolor sittlorem ipsum dolor sittlorem ipsum dolor sitt</strong></p>', 200.00, 'exSDnhwmteQ', 'karamela', 101, '1', '0'),
+(3, 2, '2022-05-25 12:36:28', 'Taze yeşil gömlek', 'taze-yesil-gomlek', '<p>the god of the empire fon the station keyframe of the man heard placehold</p>', 250.00, '', 'GODSPART', 1, '1', '0'),
+(4, 1, '2022-05-25 12:37:41', 'Spartian Shoes', 'spartian-shoes', '<p>Spartian Shoes Flankies Band Of The Panties</p>', 750.00, '', 'Trakiens', 35, '1', '0'),
+(5, 2, '2022-05-25 13:07:54', 'Lüks gömlek fiyaka', 'luks-gomlek-fiyaka', '<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 50.00, '', 'Kasket Video games', 99, '1', '1'),
+(6, 9, '2022-05-25 10:52:02', 'gomlek Cetece Kontindan', 'gomlek-cetece-kontindan', '<p><strong>lorem ipsum dolor sittlorem ipsum dolor sittlorem ipsum dolor sitt</strong></p>', 75.00, 'Zk2VhA', 'karamela', 101, '1', '1'),
+(7, 9, '2022-05-25 12:36:28', 'Allah Version 1.0', 'allah-version-1-0', '<p>the god of the empire fon the station keyframe of the man heard placehold</p>', 250.99, '', 'GODSPART', 1, '1', '1'),
+(8, 1, '2022-05-25 12:37:41', 'mavi ayakakbı', 'mavi-ayakkabi', '<p>Spartian Shoes Flankies Band Of The Panties</p>', 750.00, '', 'Trakiens', 35, '1', '0'),
+(10, 2, '2022-05-25 14:14:48', 'san sebastiano', 'san-sebastiano', '<p>Den peke</p>', 12.00, '', 'mastif', 1, '1', '0'),
+(11, 8, '2022-05-25 14:33:42', 'kırmızı sapka', 'kirmizi-sapka', '<p>falan filan</p>', 150.00, '', 'sapka kırmızı', 5, '1', '0'),
+(12, 3, '2022-05-26 09:21:58', 'gomlek Cetece Kontindan', 'gomlek-cetece-kontindan', '<p>asdasd</p>', 33.00, '', 'rafa ', 1, '1', '0'),
+(13, 2, '2022-05-26 12:47:27', 'yeni gelen saydam gömlek', 'yeni-gelen-saydam-gomlek', '<p>Allahu ekber Lore m ipsm dolor akkesessrıra</p>', 150.00, 'a6xXLw0au-c', 'fafa', 50, '1', '0'),
+(14, 2, '2022-05-26 13:03:27', 'fakir', 'fakir', '<p>23123213</p>', 44.00, '44', '44', 44, '1', '0');
 
 --
 -- Dökümü yapılmış tablolar için indeksler
@@ -315,7 +319,7 @@ ALTER TABLE `slider`
 -- Tablo için AUTO_INCREMENT değeri `urun`
 --
 ALTER TABLE `urun`
-  MODIFY `urun_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `urun_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

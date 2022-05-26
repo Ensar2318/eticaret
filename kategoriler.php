@@ -38,10 +38,10 @@ $uruncek = $urunsor->fetchAll(PDO::FETCH_ASSOC);
 				<?php if(!$say){echo "<h4 class='text-center'>Bu Kategoride Ürün Bulunamadı.</h4>";} ?>
 				<?php foreach ($uruncek as $key => $value) { ?>
 					<div class="col-md-4">
-						<div class="productwrap">
+						<div style="height: 220px;" class="productwrap">
 							<div class="pr-img">
 								<div class="hot"></div>
-								<a href="product.htm"><img src="images\sample-3.jpg" alt="" class="img-responsive"></a>
+								<a href="<?php echo "urun-".$value['urun_seourl']."-".$value['urun_id'] ?>"><img src="images\sample-3.jpg" alt="" class="img-responsive"></a>
 								<div class="pricetag on-sale">
 									<div class="inner on-sale"><span class="onsale"><?php echo $value['urun_fiyat'] . " $" ?></span></div>
 								</div>
