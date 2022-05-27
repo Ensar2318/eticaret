@@ -72,7 +72,7 @@ $uruncek = $urunsor->fetchAll(PDO::FETCH_ASSOC);
                     <td><?php echo $value['urun_stok'] ?></td>
                     <td><?php echo $value['urun_fiyat']." $" ?></td>
                     <td class="text-center"><?php echo $value['urun_durum'] ? '<button class="btn btn-xs btn-success">Aktif</button>' : '<button class="btn btn-xs btn-danger">Pasif</button>' ?></td>
-                    <td class="text-center"><?php echo $value['urun_onecikar'] ? '<button class="btn btn-xs btn-success">Aktif</button>' : '<button class="btn btn-xs btn-danger">Pasif</button>' ?></td>
+                    <td class="text-center"><?php echo $value['urun_onecikar'] ? "<a href='../nesting/islem.php?urun_hizlionecikar=1&urun_id=$value[urun_id]' class='btn btn-xs btn-success'>Öne çıkar aktif</a>" : "<a href='../nesting/islem.php?urun_hizlionecikar=0&urun_id=$value[urun_id]' class='btn btn-xs btn-danger'>Öne çıkar pasif</a>" ?></td>
                     <td class="text-center"><a href="urun-duzenle.php?urun_id=<?php echo $value['urun_id'] ?>" class="btn btn-xs btn-primary">Düzenle</a></td>
                     <td class="text-center"><a href="../nesting/islem.php?urunsil=ok&urun_id=<?php echo $value['urun_id'] ?>" class="btn btn-xs btn-danger">Sil</a></td>
 

@@ -3,12 +3,23 @@ ob_start();
 session_start();
 require_once 'admin/nesting/baglan.php';
 require_once 'admin/production/function.php';
+
+// Sitenin ayarlarını çeken sql 
 $ayarsor = $db->prepare("SELECT * FROM ayar where ayar_id=:id");
 $ayarsor->execute([
     'id' => 0
 ]);
 $ayarcek = $ayarsor->fetch(PDO::FETCH_ASSOC);
 
+// Hakkımızda admin panelinin bilgilerini çeken Sql
+$hakkimizdasor = $db->prepare("SELECT * FROM hakkimizda where hakkimizda_id=:id");
+$hakkimizdasor->execute([
+    'id' => 0
+]);
+$hakkimizdacek = $hakkimizdasor->fetch(PDO::FETCH_ASSOC);
+// Hakkımızda admin panelinin bilgilerini çeken Sql
+
+//kullanici çeken sql
 $kullanicisor = $db->prepare("SELECT * FROM kullanici where kullanici_mail=:mail");
 if (isset($_SESSION['userkullanici_mail'])) {
     $kullanicisor->execute([
@@ -44,7 +55,7 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="css\owl.carousel.css">
     <link rel="stylesheet" href="css\owl.transitions.css">
     <!-- fancy Style -->
-	<link rel="stylesheet" type="text/css" href="js\product\jquery.fancybox.css?v=2.1.5" media="screen">
+    <link rel="stylesheet" type="text/css" href="js\product\jquery.fancybox.css?v=2.1.5" media="screen">
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

@@ -9,6 +9,14 @@ $urunsor->execute([
 ]);
 $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
 
+$yorumsor = $db->prepare("SELECT * FROM yorumlar WHERE urun_id=:urun_id ORDER BY yorum_zaman DESC");
+$yorumsor->execute([
+	"urun_id" => $uruncek['urun_id']
+]);
+$yorumcek = $yorumsor->fetchAll(PDO::FETCH_ASSOC);
+
+$yorumsay = $yorumsor->rowcount();
+
 // Benzer urunleri cekme kısmı
 $urunlersor = $db->prepare("SELECT * FROM urun WHERE kategori_id=:kategori_id and urun_durum=:urun_durum and urun_id!=:urun_id ORDER BY RAND() limit 3");
 $urunlersor->execute([
@@ -59,7 +67,7 @@ if (!$urunsor->rowcount()) {
 					<div class="productdata">
 						<div class="infospan">Ürün Kodu <span><?php echo $uruncek['urun_id'] ?></span></div>
 						<div class="infospan">Ürün Fiyat <span><?php echo $uruncek['urun_fiyat'] . "$" ?></span></div>
-					
+
 
 						<div style="margin-top: 1rem;" class="form-group">
 							<label for="qty" class="col-sm-2 control-label">Adet </label>
@@ -92,31 +100,57 @@ if (!$urunsor->rowcount()) {
 
 			<div class="tab-review">
 				<ul id="myTab" class="nav nav-tabs shop-tab">
-					<li class="active"><a href="#desc" data-toggle="tab">Açıklama</a></li>
-					<li class=""><a href="#rev" data-toggle="tab">Reviews (0)</a></li>
+					<li class="<?php echo isset($_GET['durum']) ? '' : 'active' ?>"><a href="#desc" data-toggle="tab">Açıklama</a></li>
+					<li class="<?php echo isset($_GET['durum']) ? 'active' : '' ?>"><a href="#rev" data-toggle="tab">Yorumlar (<?php echo $yorumsay ?>)</a></li>
 					<?php if (!empty($uruncek['urun_video'])) { ?>
 						<li class=""><a href="#video" data-toggle="tab">Ürün Videosu</a></li>
 					<?php } ?>
 				</ul>
 				<div id="myTabContent" class="tab-content shop-tab-ct">
 
-					<div class="tab-pane fade active in" id="desc">
+					<div class="tab-pane fade <?php echo isset($_GET['durum']) ? '' : 'active in' ?> " id="desc">
 						<?php echo $uruncek['urun_detay'] ?>
 					</div>
 
-					<div class="tab-pane fade" id="rev">
-						<p class="dash">
-							<span>Jhon Doe</span> (11/25/2012)<br><br>
-							Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse.
-						</p>
+					<div class="tab-pane fade <?php echo isset($_GET['durum']) ? 'active in' : '' ?>" id="rev">
+						<!-- yorumlar -->
+
+						<?php echo $yorumsay == 0 ? '<p>Henüz Hiç Yorum Yok</p>' : ''  ?>
+
+						<?php if (isset($_GET['durum'])) { ?>
+							<?php if ($_GET['durum'] == "ok") { ?>
+								<p style="padding-left:10px" class="bg-success">Yorum Başarılı Şekilde Paylaşılmıştır.</p>
+							<?php } elseif ($_GET['durum'] == "no") { ?>
+								<p style="padding-left:10px" class="bg-danger ">Yorum Paylaşırken Bir Hata Oluştu.</p>
+							<?php } ?>
+						<?php } ?>
+
+						<?php foreach ($yorumcek as $key => $value) {
+							$zaman_tarih = explode(" ", $value['yorum_zaman']);
+
+							$idilekullanicisor = $db->prepare("SELECT * FROM kullanici where kullanici_id=:kullanici_id");
+							$idilekullanicisor->execute([
+								'kullanici_id' => $value['kullanici_id']
+							]);
+							$idilekullanicicek = $idilekullanicisor->fetch(PDO::FETCH_ASSOC);
+						?>
+							<p class="dash">
+								<span><?php echo $idilekullanicicek['kullanici_adsoyad'] ?></span> (<?php echo $zaman_tarih[0]; ?>)<br><br>
+								<?php echo $value['yorum_detay'] ?>
+							</p>
+						<?php } ?>
+
 						<h4>Yorum Yazın</h4>
 						<?php if ($say) { ?>
-							<form role="form">
+							<form action="admin/nesting/islem.php" method="POST" role="form">
+								<input value="<?php echo $kullanicicek['kullanici_id'] ?>" name="kullanici_id" type="text" hidden>
+								<input value="<?php echo $uruncek['urun_seourl'] ?>" name="urun_seourl" type="text" hidden>
+								<input value="<?php echo $uruncek['urun_id'] ?>" name="urun_id" type="text" hidden>
 								<div class="form-group">
-									<textarea placeholder="Lütfen Yorumunuzu belirtiniz." class="form-control" id="text"></textarea>
+									<textarea placeholder="Lütfen Yorumunuzu belirtiniz." name="yorum_detay" class="form-control" id="text"></textarea>
 								</div>
 
-								<button type="submit" class="btn btn-default btn-red btn-sm">Submit</button>
+								<button type="submit" name="yorumyap" class="btn btn-default btn-red btn-sm">Yorum Gönder</button>
 							</form>
 						<?php } else {
 							echo "<p style='margin:0;'>Yorum yapmak için giriş yapmalısınız. Hesabınız yoksa <a style='color:red' href='register.php'>kayıt ol</a></p>";

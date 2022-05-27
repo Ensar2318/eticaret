@@ -1,10 +1,5 @@
 ﻿<?php
 require_once 'header.php';
-$hakkimizdasor = $db->prepare("SELECT * FROM hakkimizda where hakkimizda_id=:id");
-$hakkimizdasor->execute([
-	'id' => 0
-]);
-$hakkimizdacek = $hakkimizdasor->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container">

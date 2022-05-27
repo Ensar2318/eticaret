@@ -131,6 +131,97 @@ if (isset($_POST["urunkaydet"])) {
     }
 }
 
+// Yorum Kaydetme sql işlemi
+if (isset($_POST['yorumyap'])) {
+
+    $seourl = $_POST['urun_seourl'];
+    $urunid = $_POST['urun_id'];
+    $yorumlarkaydet = $db->prepare("INSERT INTO yorumlar SET 
+    yorum_detay=:yorum_detay,
+    urun_id=:urun_id,
+    kullanici_id=:kullanici_id
+   ");
+
+    $update = $yorumlarkaydet->execute([
+        'yorum_detay' => $_POST['yorum_detay'],
+        'urun_id' => $_POST['urun_id'],
+        'kullanici_id' => $_POST['kullanici_id']
+    ]);
+
+
+    if ($update) {
+        header("location:../../urun-$seourl-$urunid?durum=ok");
+        exit;
+    } else {
+        header("location:../../urun-$seourl-$urunid?durum=no");
+        exit;
+    }
+}
+
+// Ürün Hızlı bir şekilde öne çıkarma sql işlemi
+if (isset($_GET['urun_hizlionecikar'])) {
+
+    $urunkaydet = $db->prepare("UPDATE urun SET
+     urun_onecikar=:urun_onecikar 
+     where urun_id={$_GET['urun_id']}");
+
+    $update = $urunkaydet->execute([
+        "urun_onecikar" => !$_GET['urun_hizlionecikar']
+    ]);
+
+    if ($update) {
+        header("location:../production/urun.php?durum=ok");
+        exit;
+    } else {
+        header("location:../production/urun.php?durum=no");
+        exit;
+    }
+}
+
+// Ürün düzenleme işlemleri
+if (isset($_POST["urunduzenle"])) {
+    $seourl = seo($_POST['urun_ad']);
+
+    $id = $_POST['urun_id'];
+
+    $urunkaydet = $db->prepare("UPDATE urun SET
+    kategori_id=:kategori_id,
+    urun_ad=:urun_ad,
+    urun_seourl=:urun_seourl,
+    urun_detay=:urun_detay,
+    urun_fiyat=:urun_fiyat,
+    urun_video=:urun_video,
+    urun_keyword=:urun_keyword,
+    urun_stok=:urun_stok,
+    urun_durum=:urun_durum,
+    urun_onecikar=:urun_onecikar
+    where urun_id=$id");
+
+    $update = $urunkaydet->execute([
+        'kategori_id' => $_POST['kategori_id'],
+        'urun_ad' => $_POST['urun_ad'],
+        'urun_seourl' => $seourl,
+        'urun_detay' => $_POST['urun_detay'],
+        'urun_fiyat' => $_POST['urun_fiyat'],
+        'urun_video' => $_POST['urun_video'],
+        'urun_keyword' => $_POST['urun_keyword'],
+        'urun_stok' => $_POST['urun_stok'],
+        'urun_durum' => $_POST['urun_durum'],
+        'urun_onecikar' => $_POST['urun_onecikar']
+
+    ]);
+
+
+
+    if ($update) {
+        header("location:../production/urun-duzenle.php?durum=ok&urun_id=" . $_POST['urun_id']);
+        exit;
+    } else {
+        header("location:../production/urun-duzenle.php?durum=no&urun_id=" . $_POST['urun_id']);
+        exit;
+    }
+}
+
 // Ürün düzenleme işlemleri
 if (isset($_POST["urunduzenle"])) {
     $seourl = seo($_POST['urun_ad']);

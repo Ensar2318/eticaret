@@ -1,9 +1,10 @@
 ﻿<?php
 require_once 'header.php';
 
-$urunsor = $db->prepare("SELECT * FROM urun WHERE urun_onecikar=:urun_onecikar ORDER BY urun_id DESC ");
+$urunsor = $db->prepare("SELECT * FROM urun WHERE urun_onecikar=:urun_onecikar and urun_durum=:urun_durum ORDER BY urun_id DESC ");
 $urunsor->execute([
-	"urun_onecikar" => 1
+	"urun_onecikar" => 1,
+	"urun_durum" => 1
 ]);
 $uruncek = $urunsor->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -33,13 +34,13 @@ $uruncek = $urunsor->fetchAll(PDO::FETCH_ASSOC);
 						<div class="productwrap" style="height: 370px;">
 							<div class="pr-img">
 								<div class="hot"></div>
-								<a href="<?php echo "urun-".$value['urun_seourl']."-".$value['urun_id'] ?>"><img src="images/inosuke.png" alt="" class="img-responsive"></a>
+								<a href="<?php echo "urun-" . $value['urun_seourl'] . "-" . $value['urun_id'] ?>"><img src="images/inosuke.png" alt="" class="img-responsive"></a>
 								<div class="pricetag blue">
-									<div class="inner"><span><?php echo $value['urun_fiyat']." $" ?></span></div>
+									<div class="inner"><span><?php echo $value['urun_fiyat'] . " $" ?></span></div>
 								</div>
 							</div>
-							<span class="smalltitle"><a href="<?php echo "urun-".$value['urun_seourl']."-".$value['urun_id'] ?>"><?php echo $value['urun_ad'] ?></a></span>
-							<span class="smalldesc">Item no.: <?php echo $value['urun_id'] ?></span>
+							<span class="smalltitle"><a href="<?php echo "urun-" . $value['urun_seourl'] . "-" . $value['urun_id'] ?>"><?php echo $value['urun_ad'] ?></a></span>
+							<span class="smalldesc">Ürün Kodu : <?php echo $value['urun_id'] ?></span>
 						</div>
 					</div>
 				<?php } ?>
@@ -54,24 +55,12 @@ $uruncek = $urunsor->fetchAll(PDO::FETCH_ASSOC);
 		<div class="col-md-9">
 			<!--Main content-->
 			<div class="title-bg">
-				<div class="title">About Shopping</div>
+				<div class="title">Hakkımızda</div>
 			</div>
-			<p class="ct">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-				labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-				laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-				voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-				non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-			</p>
-			<p class="ct">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-				labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-				laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-				voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-				non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-			</p>
-			<a href="" class="btn btn-default btn-red btn-sm">Read More</a>
+			<?php
+			echo substr($hakkimizdacek['hakkimizda_icerik'], 0, 1100) . "..." ?>
 
+			<div><a href="about.php" class="btn btn-default btn-red btn-sm">Devamını Oku</a></div>
 			<div class="title-bg">
 				<div class="title">Lastest Products</div>
 			</div>
