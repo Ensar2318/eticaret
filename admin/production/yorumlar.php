@@ -52,8 +52,8 @@ $yorumlaricek = $yorumlarisor->fetchAll(PDO::FETCH_ASSOC);
               <thead>
                 <tr>
                   <th>S.No</th>
-                  <th>Kullanıcı ID</th>
-                  <th>Ürün ID</th>
+                  <th>Kullanıcı Adı</th>
+                  <th>Ürün Adı</th>
                   <th>Yorum Detay</th>
                   <th>Yorum Zaman</th>
                   <th>Yorum Durum</th>
@@ -64,14 +64,30 @@ $yorumlaricek = $yorumlarisor->fetchAll(PDO::FETCH_ASSOC);
 
 
               <tbody>
-                <?php foreach ($yorumlaricek as $key => $value) {?>
-                  <tr>                                                 
+                <?php foreach ($yorumlaricek as $key => $value) {
+
+                  //urun Adı çekme işlemi
+                  $yorumurunsor = $db->prepare("SELECT * FROM urun where urun_id=:urun_id");
+                  $yorumurunsor->execute([
+                    'urun_id' => $value['urun_id']
+                  ]);
+                  $yorumuruncek = $yorumurunsor->fetch(PDO::FETCH_ASSOC);
+
+                  //urun Adı çekme işlemi
+                  $yorumkullanicisor = $db->prepare("SELECT * FROM kullanici where kullanici_id=:kullanici_id");
+                  $yorumkullanicisor->execute([
+                    'kullanici_id' => $value['kullanici_id']
+                  ]);
+                  $yorumkullanicicek = $yorumkullanicisor->fetch(PDO::FETCH_ASSOC);
+
+                ?>
+                  <tr>
                     <td width='20'><?php echo $key ?></td>
-                    <td><?php echo $value['kullanici_id'] ?></td>
-                    <td><?php echo $value['urun_id'] ?></td>
+                    <td><?php echo $yorumkullanicicek['kullanici_adsoyad'] ?></td>
+                    <td><?php echo $yorumuruncek['urun_ad'] ?></td>
                     <td><?php echo $value['yorum_detay'] ?></td>
                     <td><?php echo $value['yorum_zaman'] ?></td>
-                    <td class="text-center"><?php echo $value['yorum_durum'] ? '<a href="../nesting/islem.php?yorum_id='.$value['yorum_id'].'&yorum_durum=1" class="btn btn-xs btn-success">Aktif</a>' : '<a href="../nesting/islem.php?yorum_id='.$value['yorum_id'].'&yorum_durum=0" class="btn btn-xs btn-danger">Pasif</a>' ?></td>
+                    <td class="text-center"><?php echo $value['yorum_durum'] ? '<a href="../nesting/islem.php?yorum_id=' . $value['yorum_id'] . '&yorum_durum=1" class="btn btn-xs btn-success">Aktif</a>' : '<a href="../nesting/islem.php?yorum_id=' . $value['yorum_id'] . '&yorum_durum=0" class="btn btn-xs btn-danger">Pasif</a>' ?></td>
                     <td class="text-center"><a href="yorumlar-duzenle.php?yorum_id=<?php echo $value['yorum_id'] ?>" class="btn btn-xs btn-primary">Düzenle</a></td>
                     <td class="text-center"><a href="../nesting/islem.php?yorumsil=ok&yorum_id=<?php echo $value['yorum_id'] ?>" class="btn btn-xs btn-danger">Sil</a></td>
                   </tr>
