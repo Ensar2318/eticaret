@@ -29,6 +29,29 @@ if (isset($_SESSION['userkullanici_mail'])) {
 $say = $kullanicisor->rowCount();
 $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
 
+//Sepet çeken sql
+$sepetsor = $db->prepare("SELECT * FROM sepet where kullanici_id=:kullanici_id");
+if (isset($_SESSION['userkullanici_mail'])) {
+    $sepetsor->execute([
+        'kullanici_id' => $kullanicicek['kullanici_id']
+    ]);
+}
+$sepetsay = $sepetsor->rowCount();
+$sepetcek = $sepetsor->fetchAll(PDO::FETCH_ASSOC);
+//Fiyat Hesaplama
+$fiyat = 0;
+if ($sepetsay) {
+    foreach ($sepetcek as $key => $value) {
+        $urunsor = $db->prepare("SELECT * FROM urun WHERE urun_id=:urun_id");
+        $urunsor->execute([
+            "urun_id" => $value['urun_id']
+        ]);
+        $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
+        $fiyat += ($uruncek['urun_fiyat'] * $value['urun_adet']);
+    }
+    $vergi = $fiyat * 0.175;
+    $vergisizfiyat = $fiyat - $vergi;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -174,55 +197,52 @@ $kullanicicek = $kullanicisor->fetch(PDO::FETCH_ASSOC);
                             </div>
                         </div>
                         <div class="col-md-2 machart">
-                            <button id="popcart" class="btn btn-default btn-chart btn-sm "><span class="mychart">Cart</span>|<span class="allprice">$0.00</span></button>
+                            <button id="popcart" class="btn btn-default btn-chart btn-sm "><span class="mychart">Alışveriş Sepeti</span>|<span class="allprice">$ <?php echo number_format((float)$fiyat, 2, ".", "") ?></span></button>
                             <div class="popcart">
                                 <table class="table table-condensed popcart-inner">
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <a href="product.htm"><img src="images\dummy-1.png" alt="" class="img-responsive"></a>
-                                            </td>
-                                            <td><a href="product.htm">Casio Exilim Zoom</a><br><span>Color: green</span>
-                                            </td>
-                                            <td>1X</td>
-                                            <td>$138.80</td>
-                                            <td><a href=""><i class="fa fa-times-circle fa-2x"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="product.htm"><img src="images\dummy-1.png" alt="" class="img-responsive"></a>
-                                            </td>
-                                            <td><a href="product.htm">Casio Exilim Zoom</a><br><span>Color: green</span>
-                                            </td>
-                                            <td>1X</td>
-                                            <td>$138.80</td>
-                                            <td><a href=""><i class="fa fa-times-circle fa-2x"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="product.htm"><img src="images\dummy-1.png" alt="" class="img-responsive"></a>
-                                            </td>
-                                            <td><a href="product.htm">Casio Exilim Zoom</a><br><span>Color: green</span>
-                                            </td>
-                                            <td>1X</td>
-                                            <td>$138.80</td>
-                                            <td><a href=""><i class="fa fa-times-circle fa-2x"></i></a></td>
-                                        </tr>
+                                        <?php if ($sepetsay) { ?>
+                                            <?php foreach ($sepetcek as $key => $value) {
+                                                $urunsor = $db->prepare("SELECT * FROM urun WHERE urun_id=:urun_id");
+                                                $urunsor->execute([
+                                                    "urun_id" => $value['urun_id']
+                                                ]);
+                                                $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
+                                            ?>
+                                                <tr>
+                                                    <td>
+                                                        <a href="<?php echo "urun-".$uruncek['urun_seourl']."-".$uruncek['urun_id'] ?>"><img src="images\dummy-1.png" alt="" class="img-responsive"></a>
+                                                    </td>
+                                                    <td><a href="<?php echo "urun-".$uruncek['urun_seourl']."-".$uruncek['urun_id'] ?>"><?php echo $uruncek['urun_ad'] ?></a><br><span>Ürün Kodu : <?php echo $uruncek['urun_id'] ?></span>
+                                                    </td>
+                                                    <td><?php echo $value['urun_adet'] . " Adet" ?></td>
+                                                    <td>$ <?php echo number_format((float)$uruncek['urun_fiyat'], 2, ".", "") ?></td>
+                                                    <td><a href="admin/nesting/islem.php?sepet_sil=ok&sepet_id=<?php echo $value['sepet_id']."&url=$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>"><i class="fa fa-times-circle fa-2x"></i></a></td>
+                                                </tr>
+                                            <?php } ?>
+                                        <?php } else { ?>
+                                            <h4 style="color: gray;">Sepetinizde hiç ürün yoktur.</h4>
+                                        <?php } ?>
+
+
                                     </tbody>
                                 </table>
-                                <span class="sub-tot">Sub-Total : <span>$277.60</span> | <span>Vat (17.5%)</span> :
-                                    $36.00 </span>
-                                <br>
-                                <div class="btn-popcart">
-                                    <a href="checkout.htm" class="btn btn-default btn-red btn-sm">Checkout</a>
-                                    <a href="cart.htm" class="btn btn-default btn-red btn-sm">More</a>
-                                </div>
-                                <div class="popcart-tot">
-                                    <p>
-                                        Total<br>
-                                        <span>$313.60</span>
-                                    </p>
-                                </div>
+                                <?php if ($sepetsay) { ?>
+                                    <span class="sub-tot">Ara-Toplam : <span><?php echo number_format((float)$vergisizfiyat, 2, ".", "") ?></span> | <span>Vergi (17.5%)</span> :
+                                        $ <?php echo number_format((float)$vergi, 2, ".", "") ?> </span>
+                                    <br>
+                                    <div class="btn-popcart">
+                                        <a href="checkout.htm" class="btn btn-default btn-red btn-sm">Ödeme Sayfası</a>
+                                        <a href="sepet.php" class="btn btn-default btn-red btn-sm">Sepet</a>
+                                    </div>
+                                    <div class="popcart-tot">
+                                        <p>
+                                            Toplam Tutar<br>
+                                            <span>$<?php echo number_format((float)$fiyat, 2, ".", "") ?></span>
+                                        </p>
+                                    </div>
+                                <?php } ?>
+
                                 <div class="clearfix"></div>
                             </div>
                         </div>

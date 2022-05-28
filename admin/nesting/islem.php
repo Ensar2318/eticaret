@@ -29,6 +29,79 @@ if (isset($_POST["admingiris"])) {
     }
 }
 
+//yorum silme işlemi
+if (isset($_GET["sepet_sil"])) {
+
+    $gelenUrl = explode("?", $_GET['url']);
+    $sepeturun_sil = $db->prepare("DELETE FROM sepet WHERE sepet_id=:sepet_id");
+
+    $durum = $sepeturun_sil->execute([
+        'sepet_id' => $_GET['sepet_id']
+    ]);
+
+    if ($durum) {
+        header('location: http://' . $gelenUrl[0]);
+        exit;
+    } else {
+        header('location:' . $gelenUrl[0]);
+        exit;
+    }
+}
+
+// Sepete Ürün Adeti Güncelleme kodları
+if (isset($_POST['sepetAdetGuncelle'])) {
+
+
+    $urunAdet = $_POST['urun_adet'];
+    if ($urunAdet == 0) {
+        $urunAdet = 1;
+    }
+
+    $sepetKaydet = $db->prepare("UPDATE sepet SET
+    urun_adet=:urun_adet
+    WHERE sepet_id={$_POST['sepet_id']}");
+
+    $update = $sepetKaydet->execute([
+        'urun_adet' => $urunAdet
+    ]);
+
+    if ($update) {
+        header("location:../../sepet.php?durum=ok");
+        exit;
+    } else {
+        header("location:../../sepet.php?durum=no");
+        exit;
+    }
+}
+
+// Sepete Ürün ekleme kodları
+if (isset($_POST['sepeteekle'])) {
+
+    $urunid = $_POST['urun_id'];
+    $seourl = $_POST['urun_seourl'];
+
+    $sepetkaydet = $db->prepare("INSERT INTO sepet SET 
+    kullanici_id=:kullanici_id,
+    urun_id=:urun_id,
+    urun_adet=:urun_adet
+   ");
+
+    $update = $sepetkaydet->execute([
+        'kullanici_id' => $_POST['kullanici_id'],
+        'urun_id' => $_POST['urun_id'],
+        'urun_adet' => $_POST['urun_adet']
+    ]);
+
+
+    if ($update) {
+        header("location:../../urun-$seourl-$urunid?yorum-durum=ok");
+        exit;
+    } else {
+        header("location:../../urun-$seourl-$urunid?yorum-durum=no");
+        exit;
+    }
+}
+
 // Kullancı Giriş İşlemi basit kullanıcı yetkisi 1 olan
 if (isset($_POST["kullanicigiris"])) {
 
@@ -131,6 +204,76 @@ if (isset($_POST["urunkaydet"])) {
     }
 }
 
+//yorum Düzenleme islemleri
+if (isset($_POST["yorumduzenle"])) {
+
+    $yorumkaydet = $db->prepare("UPDATE yorumlar SET
+
+    yorum_detay=:yorum_detay,
+    yorum_durum=:yorum_durum
+    where yorum_id={$_POST['yorum_id']}");
+
+    $update = $yorumkaydet->execute([
+        'yorum_detay' => $_POST['yorum_detay'],
+        'yorum_durum' => $_POST['yorum_durum']
+    ]);
+
+
+
+    if ($update) {
+        header("location:../production/yorumlar-duzenle.php?durum=ok&yorum_id=" . $_POST['yorum_id']);
+        exit;
+    } else {
+        header("location:../production/yorumlar-duzenle.php?durum=no&yorum_id=" . $_POST['yorum_id']);
+        exit;
+    }
+}
+
+
+
+//ürün silme işlemi
+if (isset($_GET["yorumsil"])) {
+
+    $yorumsil = $db->prepare("DELETE FROM yorumlar WHERE yorum_id=:yorum_id");
+
+    $durum = $yorumsil->execute([
+        'yorum_id' => $_GET['yorum_id']
+    ]);
+
+    if ($durum) {
+        header('location:../production/yorumlar.php?durum=ok');
+        exit;
+    } else {
+        header('location:../production/yorumlar.php?durum=no');
+        exit;
+    }
+}
+
+
+// Yorum duzenle
+if (isset($_GET['yorum_durum'])) {
+
+    echo $_GET['yorum_durum'];
+    echo $_GET['yorum_id'];
+
+    $yorumdurumkaydet = $db->prepare("UPDATE yorumlar SET
+    yorum_durum=:yorum_durum 
+    where yorum_id={$_GET['yorum_id']}");
+
+    $update = $yorumdurumkaydet->execute([
+        "yorum_durum" => !$_GET['yorum_durum']
+    ]);
+
+
+    if ($update) {
+        header("location:../production/yorumlar.php?durum=ok");
+        exit;
+    } else {
+        header("location:../production/yorumlar.php?durum=no");
+        exit;
+    }
+}
+
 // Yorum Kaydetme sql işlemi
 if (isset($_POST['yorumyap'])) {
 
@@ -139,13 +282,15 @@ if (isset($_POST['yorumyap'])) {
     $yorumlarkaydet = $db->prepare("INSERT INTO yorumlar SET 
     yorum_detay=:yorum_detay,
     urun_id=:urun_id,
-    kullanici_id=:kullanici_id
+    kullanici_id=:kullanici_id,
+    yorum_durum=:yorum_durum
    ");
 
     $update = $yorumlarkaydet->execute([
         'yorum_detay' => $_POST['yorum_detay'],
         'urun_id' => $_POST['urun_id'],
-        'kullanici_id' => $_POST['kullanici_id']
+        'kullanici_id' => $_POST['kullanici_id'],
+        'yorum_durum' => 0
     ]);
 
 

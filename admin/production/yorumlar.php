@@ -2,9 +2,9 @@
 require_once 'header.php';
 
 //bütün kisileri secme
-$kullanicisor = $db->prepare("SELECT * FROM kullanici");
-$kullanicisor->execute();
-$kullanicicek = $kullanicisor->fetchAll(PDO::FETCH_ASSOC);
+$yorumlarisor = $db->prepare("SELECT * FROM yorumlar ORDER BY yorum_id ASC");
+$yorumlarisor->execute();
+$yorumlaricek = $yorumlarisor->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!-- page content -->
@@ -14,8 +14,8 @@ $kullanicicek = $kullanicisor->fetchAll(PDO::FETCH_ASSOC);
     <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
-          <div class="x_title">
-            <h2>Kullanıcılar
+          <div class="x_title" style="display: flex; align-items: center;">
+            <h2>yorumlari Listeleme
               <small>
                 <?php if (isset($_GET["durum"])) { ?>
                   <?php if ($_GET["durum"] == "ok") { ?>
@@ -30,7 +30,7 @@ $kullanicicek = $kullanicisor->fetchAll(PDO::FETCH_ASSOC);
                 <?php } ?>
               </small>
             </h2>
-            <ul class="nav navbar-right panel_toolbox">
+            <ul style="margin: 0 20px 0 0;margin-left:auto" class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>
               <li class="dropdown">
@@ -51,30 +51,29 @@ $kullanicicek = $kullanicisor->fetchAll(PDO::FETCH_ASSOC);
             <table id="datatable-responsive" class="table table-striped table-bordered">
               <thead>
                 <tr>
-                  <th>sıra</th>
-                  <th>Kayıt Tarihi</th>
-                  <th>Ad Soyad</th>
-                  <th>Mail Adresi</th>
-                  <th>Telefon</th>
-                  <th>Durum</th>
-                  <th>İşlem</th>
-                  <th>İşlem</th>
+                  <th>S.No</th>
+                  <th>Kullanıcı ID</th>
+                  <th>Ürün ID</th>
+                  <th>Yorum Detay</th>
+                  <th>Yorum Zaman</th>
+                  <th>Yorum Durum</th>
+                  <th></th>
+                  <th></th>
                 </tr>
               </thead>
 
 
               <tbody>
-                <?php foreach ($kullanicicek as $key => $value) { ?>
-                  <tr>
-                    <td><?php echo ($key + 1) ?></td>
-                    <td><?php echo $value['kullanici_zaman'] ?></td>
-                    <td><?php echo $value['kullanici_adsoyad'] ?></td>
-                    <td><?php echo $value['kullanici_mail'] ?></td>
-                    <td><?php echo $value['kullanici_gsm'] ?></td>
-                    <td><?php echo $value['kullanici_durum'] == 1 ? 'Aktif' : 'Pasif' ?></td>
-                    <td class="text-center"><a href="kullanici-duzenle.php?kullanici_id=<?php echo $value['kullanici_id'] ?>" class="btn btn-xs btn-primary">Düzenle</a></td>
-                    <td class="text-center"><a href="../nesting/islem.php?kullanicisil=ok&kullanici_id=<?php echo $value['kullanici_id'] ?>" class="btn btn-xs btn-danger">Sil</a></td>
-
+                <?php foreach ($yorumlaricek as $key => $value) {?>
+                  <tr>                                                 
+                    <td width='20'><?php echo $key ?></td>
+                    <td><?php echo $value['kullanici_id'] ?></td>
+                    <td><?php echo $value['urun_id'] ?></td>
+                    <td><?php echo $value['yorum_detay'] ?></td>
+                    <td><?php echo $value['yorum_zaman'] ?></td>
+                    <td class="text-center"><?php echo $value['yorum_durum'] ? '<a href="../nesting/islem.php?yorum_id='.$value['yorum_id'].'&yorum_durum=1" class="btn btn-xs btn-success">Aktif</a>' : '<a href="../nesting/islem.php?yorum_id='.$value['yorum_id'].'&yorum_durum=0" class="btn btn-xs btn-danger">Pasif</a>' ?></td>
+                    <td class="text-center"><a href="yorumlar-duzenle.php?yorum_id=<?php echo $value['yorum_id'] ?>" class="btn btn-xs btn-primary">Düzenle</a></td>
+                    <td class="text-center"><a href="../nesting/islem.php?yorumsil=ok&yorum_id=<?php echo $value['yorum_id'] ?>" class="btn btn-xs btn-danger">Sil</a></td>
                   </tr>
                 <?php } ?>
               </tbody>

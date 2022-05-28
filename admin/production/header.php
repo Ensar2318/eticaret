@@ -105,6 +105,7 @@ if (!$say) {
                   </ul>
                 </li>
                 <li><a href="hakkimizda.php"><i class="fa fa-info"></i> Hakkımızda</a></li>
+                <li><a href="yorumlar.php"><i class="fa fa-comment"></i> Yorumlar</a></li>
                 <li><a href="kullanici.php"><i class="fa fa-user"></i> Kullanıcılar</a></li>
                 <li><a href="urun.php"><i class="fa fa-shopping-basket"></i> Urunler</a></li>
                 <li><a href="menu.php"><i class="fa fa-list"></i> Menuler</a></li>

@@ -9,9 +9,10 @@ $urunsor->execute([
 ]);
 $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
 
-$yorumsor = $db->prepare("SELECT * FROM yorumlar WHERE urun_id=:urun_id ORDER BY yorum_zaman DESC");
+$yorumsor = $db->prepare("SELECT * FROM yorumlar WHERE urun_id=:urun_id AND yorum_durum=:yorum_durum ORDER BY yorum_zaman DESC");
 $yorumsor->execute([
-	"urun_id" => $uruncek['urun_id']
+	"urun_id" => $uruncek['urun_id'],
+	"yorum_durum" => 1
 ]);
 $yorumcek = $yorumsor->fetchAll(PDO::FETCH_ASSOC);
 
@@ -33,12 +34,15 @@ if (!$urunsor->rowcount()) {
 ?>
 
 <div class="container">
-	<!--small-nav -->
-	<div class="clearfix"></div>
-	<div class="lines"></div>
-</div>
 
-<div class="container">
+	<?php if (isset($_GET['yorum-durum'])) { ?>
+		<?php if ($_GET['yorum-durum'] == "ok") { ?>
+			<div style="margin: 0;" class="alert alert-success">Ürün Başarı Bir Şekilde Sepete Eklendi</div>
+		<?php } elseif ($_GET['yorum-durum'] == "no") { ?>
+			<div style="margin: 0;" class="alert alert-danger"><b>Hata!</b> Ürün Sepete Eklenemedi</div>
+		<?php } ?>
+	<?php } ?>
+
 	<div class="row">
 		<div class="col-md-9">
 			<!--Main content-->
@@ -68,23 +72,33 @@ if (!$urunsor->rowcount()) {
 						<div class="infospan">Ürün Kodu <span><?php echo $uruncek['urun_id'] ?></span></div>
 						<div class="infospan">Ürün Fiyat <span><?php echo $uruncek['urun_fiyat'] . "$" ?></span></div>
 
-
-						<div style="margin-top: 1rem;" class="form-group">
-							<label for="qty" class="col-sm-2 control-label">Adet </label>
-							<div class="col-sm-4">
-								<select class="form-control" id="qty">
-									<option>1
-									<option>2
-									<option>3
-									<option>4
-									<option>5
-								</select>
-							</div>
-							<div class="col-sm-4">
-								<button class="btn btn-default btn-red btn-sm"><span class="addchart">Add To Chart</span></button>
-							</div>
-							<div class="clearfix"></div>
-						</div>
+						<?php if ($uruncek['urun_stok'] != 0) { ?>
+							<form action="admin/nesting/islem.php" method="POST">
+								<div style="margin-top: 1rem;" class="form-group">
+									<label for="qty" class="col-sm-2 control-label">Adet </label>
+									<div class="col-sm-4">
+										<select name="urun_adet" class="form-control" id="qty">
+											<option>1
+											<option>2
+											<option>3
+											<option>4
+											<option>5
+										</select>
+									</div>
+									<div class="col-sm-4">
+										<input hidden value="<?php echo $kullanicicek['kullanici_id'] ?>" name="kullanici_id" type="text">
+										<input hidden value="<?php echo $uruncek['urun_id'] ?>" name="urun_id" type="text">
+										<input hidden value="<?php echo $uruncek['urun_seourl'] ?>" name="urun_seourl" type="text">
+										<?php if ($say) { ?>
+											<button name="sepeteekle" class="btn btn-default btn-red btn-sm"><span class="addchart">Sepete Ekle</span></button>
+										<?php } else { ?>
+											<a href="#" class="btn btn-default btn-red btn-sm"><span class="addchart">Sepete Ekle</span></a>
+											<?php } ?>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+							</form>
+						<?php }  ?>
 
 						<div style="margin-top: 2rem;" class="sharing">
 
