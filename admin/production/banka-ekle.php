@@ -8,8 +8,8 @@ require_once 'header.php';
     <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
-          <div class="x_title"  style="display: flex; align-items: center;">
-            <h2>kategori Ekle</h2>
+          <div class="x_title" style="display: flex; align-items: center;">
+            <h2>banka Ekle</h2>
             <a href="banka.php" class="btn btn-success btn-xs" style="margin: 0 20px 0 0;margin-left:auto">Geri</a>
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -34,27 +34,35 @@ require_once 'header.php';
             <form action="../nesting/islem.php" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">kategori Ad<span class="required">*</span>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">banka Ad<span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input name="kategori_ad" type="text" placeholder="kategori adını giriniz." id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                  <input name="banka_ad" type="text" placeholder="banka adını giriniz." id="first-name" required="required" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 
 
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">kategori Sıra<span class="required">*</span>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">banka iban<span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input name="kategori_sira" placeholder="katogeri sıra numarası giriniz." type="number" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                  <input name="banka_iban" placeholder="banka İban numarası giriniz." minlength="24" maxlength="24" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">kategori Durum<span class="required">*</span>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">banka Hesap Ad Soyad<span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <select class="form-control" name="kategori_durum" required>
+                  <input name="banka_hesapadsoyad" placeholder="banka Hesap Soyadınızı giriniz." type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">banka Durum<span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <select class="form-control" name="banka_durum" required>
                     <option value="1">Aktif</option>
                     <option value="0">Pasif</option>
                   </select>
@@ -65,7 +73,7 @@ require_once 'header.php';
               <div class="ln_solid"></div>
               <div class="form-group">
                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 text-right">
-                  <button type="submit" name="kategoriekle" class="btn btn-success">Ekle</button>
+                  <button type="submit" name="bankaekle" class="btn btn-success">Ekle</button>
 
                 </div>
               </div>

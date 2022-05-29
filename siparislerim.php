@@ -3,6 +3,13 @@ require_once 'header.php';
 if (!$say) {
 	header('location:index.php');
 }
+$siparisSor = $db->prepare("SELECT * FROM siparis where kullanici_id=:id");
+$siparisSor->execute([
+	'id' => $kullanicicek['kullanici_id']
+]);
+$siparisCek = $siparisSor->fetchAll(PDO::FETCH_ASSOC);
+$siparisSay = $siparisSor->rowCount();
+
 ?>
 
 <div class="container">
@@ -32,18 +39,25 @@ if (!$say) {
 					<th>Tarih</th>
 					<th>Tutar</th>
 					<th>Detay</th>
-				
+
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-				<td>Some Camera</td>
-				<td>PR-2</td>
-				<td>228583</td>
-				<td><a style="color: white;" class="btn btn-xs btn-primary" href="">Detay</a></td>
-				</tr>
+				<?php foreach ($siparisCek as $value) { ?>
+					<tr>
+						<td><?php echo $value['siparis_id'] ?></td>
+						<td><?php echo $value['siparis_zaman'] ?></td>
+						<td><?php echo $value['siparis_toplam'] ?> $</td>
+						<td><a style="color: white;" class="btn btn-xs btn-primary" href="siparis-detay.php?siparis_id=<?php echo $value['siparis_id'] ?>">Detay</a></td>
+					</tr>
+				<?php } ?>
 			</tbody>
 		</table>
+		<p>
+			<?php if (!$siparisSay) { ?>
+				Hiç Siparişiniz Yok.
+			<?php } ?>
+		</p>
 	</div>
 	<div class="spacer"></div>
 </div>

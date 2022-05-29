@@ -111,7 +111,7 @@ if (!$say) {
                 <li><a href="menu.php"><i class="fa fa-list"></i> Menuler</a></li>
                 <li><a href="kategori.php"><i class="fa fa-chain"></i> Kategoriler</a></li>
                 <li><a href="slider.php"><i class="fa fa-image"></i> Slider</a></li>
-
+                <li><a href="banka.php"><i class="fa fa-bank"></i> Banka Bilgileri</a></li>
 
               </ul>
             </div>

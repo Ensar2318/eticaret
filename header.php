@@ -232,8 +232,8 @@ if ($sepetsay) {
                                         $ <?php echo number_format((float)$vergi, 2, ".", "") ?> </span>
                                     <br>
                                     <div class="btn-popcart">
-                                        <a href="checkout.htm" class="btn btn-default btn-red btn-sm">Ödeme Sayfası</a>
-                                        <a href="sepet.php" class="btn btn-default btn-red btn-sm">Sepet</a>
+                                        <a href="odeme.php" class="btn btn-default btn-red btn-sm">Ödeme Sayfası</a>
+                                        <a href="sepet.php" class="btn btn-default btn-red btn-sm">Sepeti Görüntüle</a>
                                     </div>
                                     <div class="popcart-tot">
                                         <p>

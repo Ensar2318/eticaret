@@ -12,8 +12,12 @@ if (!$say) {
 				<div class="page-title-inner">
 					<div class="row">
 						<div class="col-md-12">
-							<div class="bigtitle">Alışveriş Sepetim</div>
-							<p>Alışveriş Sepetinizi Görüntülüyorsunuz.</p>
+							<?php if ($sepetsay) { ?>
+								<div class="bigtitle">Alışveriş Sepetim</div>
+								<p>Alışveriş Sepetinizi Görüntülüyorsunuz.</p>
+							<?php } else { ?>
+								<div class="bigtitle">Sepetiniz Şu Anda Boş</div>
+							<?php } ?>
 						</div>
 					</div>
 				</div>
@@ -60,7 +64,7 @@ if (!$say) {
 							<td>
 								<form action="admin/nesting/islem.php" method="POST">
 									<input type="text" name='sepet_id' hidden value="<?php echo $value['sepet_id'] ?>">
-									<input type="text" maxlength="2" pattern="\d*" name="urun_adet" require value="<?php echo $value['urun_adet'] ?>" class="form-control quantity">
+									<input type="text" maxlength="2" autocomplete="off" pattern="\d*" name="urun_adet" require value="<?php echo $value['urun_adet'] ?>" class="form-control quantity">
 									<button name="sepetAdetGuncelle" style="margin-top: 6px;" class="btn btn-warning btn-sm">Güncelle</button>
 								</form>
 							</td>
@@ -90,7 +94,7 @@ if (!$say) {
 					<div class="total">Toplam : <span class="bigprice">$<?php echo number_format((float)$fiyat, 2, ".", "") ?></span></div>
 
 					<div class="clearfix"></div>
-					<a href="" class="btn btn-default btn-yellow">Ödeme Sayfası</a>
+					<a href="odeme.php" class="btn btn-default btn-yellow">Ödeme Sayfası</a>
 				</div>
 				<div class="clearfix"></div>
 			</div>

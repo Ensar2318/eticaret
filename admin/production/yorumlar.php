@@ -73,7 +73,7 @@ $yorumlaricek = $yorumlarisor->fetchAll(PDO::FETCH_ASSOC);
                   ]);
                   $yorumuruncek = $yorumurunsor->fetch(PDO::FETCH_ASSOC);
 
-                  //urun Adı çekme işlemi
+                  //kullanıcı Adı çekme işlemi
                   $yorumkullanicisor = $db->prepare("SELECT * FROM kullanici where kullanici_id=:kullanici_id");
                   $yorumkullanicisor->execute([
                     'kullanici_id' => $value['kullanici_id']

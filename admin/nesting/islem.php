@@ -536,6 +536,207 @@ if (isset($_GET["kullanicisil"])) {
     }
 }
 
+//user kullanıcı sifre degistirme işlemi
+if (isset($_POST["usersifreguncelle"])) {
+
+
+    $gelenpassword = md5($_POST['kullanici_password']);
+    $passwordone = htmlspecialchars(md5($_POST['kullanici_passwordone']));
+    $passwordtwo = htmlspecialchars(md5($_POST['kullanici_passwordtwo']));
+
+    $kullanicisor = $db->prepare("SELECT * FROM kullanici WHERE kullanici_id=:kullanici_id and kullanici_password=:kullanici_password");
+
+    $kullanicisor->execute([
+        'kullanici_id' => $_POST['kullanici_id'],
+        'kullanici_password' => $gelenpassword
+    ]);
+
+    if ($kullanicisor->rowCount()) {
+        if ($passwordtwo == $passwordone) {
+
+            if (strlen($_POST['kullanici_passwordone']) >= 6) {
+
+                $kullanicikaydet = $db->prepare("UPDATE kullanici SET
+
+                kullanici_password=:kullanici_password
+
+                where kullanici_id={$_POST['kullanici_id']}");
+
+                $update = $kullanicikaydet->execute([
+                    'kullanici_password' => $passwordone
+                ]);
+
+                if ($update) {
+                    header("location:../../sifre-guncelle.php?durum=ok");
+                    exit;
+                } else {
+                    header("location:../../sifre-guncelle.php?durum=no");
+                    exit;
+                }
+            } else {
+                header('location:../../sifre-guncelle.php?durum=kisasifre');
+                exit;
+            }
+        } else {
+            header('location:../../sifre-guncelle.php?durum=yenisifreeslesmedi');
+            exit;
+        }
+    } else {
+        header('location:../../sifre-guncelle.php?durum=eskisifreyanlis');
+        exit;
+    }
+
+    // if ($durum) {
+    //     header('location:../production/kullanici.php?durum=ok');
+    //     exit;
+    // } else {
+    //     header('location:../production/kullanici.php?durum=no');
+    //     exit;
+    // }
+}
+
+// Banka Ekleme işlemi
+if (isset($_POST["bankaekle"])) {
+
+    $bankakaydet = $db->prepare("INSERT INTO banka SET
+    
+    banka_ad=:banka_ad,
+    banka_iban=:banka_iban,
+    banka_hesapadsoyad=:banka_hesapadsoyad,
+    banka_durum=:banka_durum");
+
+    $update = $bankakaydet->execute([
+        'banka_ad' => $_POST['banka_ad'],
+        'banka_iban' => $_POST['banka_iban'],
+        'banka_hesapadsoyad' => $_POST['banka_hesapadsoyad'],
+        'banka_durum' => $_POST['banka_durum']
+    ]);
+
+    if ($update) {
+        header("location:../production/banka.php?durum=ok");
+        exit;
+    } else {
+        header("location:../production/banka.php?durum=no");
+        exit;
+    }
+}
+
+//Sipariş Verme işlemi
+if (isset($_POST["bankasiparisekle"])) {
+    // echo "<pre>";
+    // echo print_r($_POST);
+    // echo "</pre>";
+
+    $siparis_tip = "Banka Havalesi";
+
+    $sipariskaydet = $db->prepare("INSERT INTO siparis SET
+    
+    kullanici_id=:kullanici_id,
+    siparis_toplam=:siparis_toplam,
+    siparis_banka=:siparis_banka,
+    siparis_tip=:siparis_tip
+    ");
+
+    $update = $sipariskaydet->execute([
+        'kullanici_id' => $_POST['kullanici_id'],
+        'siparis_toplam' => $_POST['siparis_toplam'],
+        'siparis_banka' => $_POST['banka_ad'],
+        'siparis_tip' => $siparis_tip
+    ]);
+
+    if ($update) {
+        //header("location:../../odeme.php?durum=ok");
+
+        $siparisid = $db->lastInsertId();
+
+        $urunbilgileri = $_POST['urun_bilgiler'];
+        foreach ($urunbilgileri as $value) {
+            $parcalanmisurunbilgisi = explode("-", $value);
+            $urun_id = $parcalanmisurunbilgisi[0];
+            $urun_fiyat = $parcalanmisurunbilgisi[1];
+            $urun_adet = $parcalanmisurunbilgisi[2];
+
+            $siparisdetaykaydet = $db->prepare("INSERT INTO siparisdetay SET
+    
+            siparis_id=:siparis_id,
+            urun_id=:urun_id,
+            urun_fiyat=:urun_fiyat,
+            urun_adet=:urun_adet
+            ");
+
+            $updatesiparisdetay = $siparisdetaykaydet->execute([
+                'siparis_id' => $siparisid,
+                'urun_id' => $urun_id,
+                'urun_fiyat' => $urun_fiyat,
+                'urun_adet' => $urun_adet
+            ]);
+        }
+        if ($updatesiparisdetay) {
+            $butunSepetiBosalt = $db->prepare("DELETE FROM sepet WHERE kullanici_id=:kullanici_id");
+            $updateSepetBosalt = $butunSepetiBosalt->execute([
+                "kullanici_id" => $_POST['kullanici_id']
+            ]);
+            if ($updateSepetBosalt) {
+                header("location:../../siparislerim.php?durum=yes");
+                exit;
+            }
+        } else {
+            header("location:../../odeme.php?durum=no");
+            exit;
+        }
+    } else {
+        header("location:../../odeme.php?durum=no");
+        exit;
+    }
+}
+
+//banka duzenleme işlemleri
+if (isset($_POST["bankaduzenle"])) {
+
+    $bankakaydet = $db->prepare("UPDATE banka SET
+    
+    banka_ad=:banka_ad,
+    banka_iban=:banka_iban,
+    banka_hesapadsoyad=:banka_hesapadsoyad,
+    banka_durum=:banka_durum
+    where banka_id=" . $_POST['banka_id']);
+
+    $update = $bankakaydet->execute([
+        'banka_ad' => $_POST['banka_ad'],
+        'banka_iban' => $_POST['banka_iban'],
+        'banka_hesapadsoyad' => $_POST['banka_hesapadsoyad'],
+        'banka_durum' => $_POST['banka_durum']
+    ]);
+
+    if ($update) {
+        header("location:../production/banka-duzenle.php?durum=ok&banka_id=" . $_POST['banka_id']);
+        exit;
+    } else {
+        header("location:../production/banka-duzenle.php?durum=no&banka_id=" . $_POST['banka_id']);
+        exit;
+    }
+}
+
+//banka silme işlemleri
+if (isset($_GET["bankasil"])) {
+
+    $seourl = seo($_POST['banka_ad']);
+
+    $bankakaydet = $db->prepare("DELETE FROM banka WHERE banka_id=:banka_id");
+
+    $update = $bankakaydet->execute([
+        "banka_id" => $_GET['banka_id']
+    ]);
+
+    if ($update) {
+        header("location:../production/banka.php?durum=ok");
+        exit;
+    } else {
+        header("location:../production/banka.php?durum=no");
+        exit;
+    }
+}
+
 // Slider kaydetme işlemi ekleme
 if (isset($_POST["sliderkaydet"])) {
 

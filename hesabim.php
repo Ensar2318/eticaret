@@ -89,6 +89,10 @@ if (!$say) {
 						<input type="text" class="form-control" id="ilce" placeholder="ilçe" name="kullanici_ilce" value="<?php echo $kullanicicek['kullanici_ilce'] ?>">
 					</div>
 				</div>
+				<div class="form-group dob">
+				<div style="margin-top: 4px;" class="col-sm-6"> <a href="sifre-guncelle.php">Şifrenizi mi Unuttunuz ? </a></div>
+					<div style="margin-top: 4px;" class="col-sm-6"> <a href="sifre-guncelle.php">Şifremi mi Değiştir </a></div>
+				</div>
 
 			</div>
 		</div>
