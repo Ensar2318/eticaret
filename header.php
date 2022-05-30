@@ -144,12 +144,13 @@ if ($sepetsay) {
                                 <div class="srchwrap">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <form class="form-horizontal" role="form">
-                                                <div class="form-group">
-                                                    <label for="search" class="col-sm-2 control-label">Search</label>
+                                            <form method="POST" action="arama.php" class="form-horizontal" role="form">
+                                                <div class="form-group" style="padding-right: 12px; display: flex; align-items: center;">
+
                                                     <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="search">
+                                                        <input minlength="3" required type="text" name="aranan" class="form-control" id="search">
                                                     </div>
+                                                    <button name="arama" style="display: flex; justify-content: center; height: 28px; align-items: center;" class="col-sm-2 btn btn-success text-center">Ara</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -211,13 +212,13 @@ if ($sepetsay) {
                                             ?>
                                                 <tr>
                                                     <td>
-                                                        <a href="<?php echo "urun-".$uruncek['urun_seourl']."-".$uruncek['urun_id'] ?>"><img src="images\dummy-1.png" alt="" class="img-responsive"></a>
+                                                        <a href="<?php echo "urun-" . $uruncek['urun_seourl'] . "-" . $uruncek['urun_id'] ?>"><img src="<?php echo $uruncek['urun_photo'] ?>" alt="" class="img-responsive"></a>
                                                     </td>
-                                                    <td><a href="<?php echo "urun-".$uruncek['urun_seourl']."-".$uruncek['urun_id'] ?>"><?php echo $uruncek['urun_ad'] ?></a><br><span>Ürün Kodu : <?php echo $uruncek['urun_id'] ?></span>
+                                                    <td><a href="<?php echo "urun-" . $uruncek['urun_seourl'] . "-" . $uruncek['urun_id'] ?>"><?php echo $uruncek['urun_ad'] ?></a><br><span>Ürün Kodu : <?php echo $uruncek['urun_id'] ?></span>
                                                     </td>
                                                     <td><?php echo $value['urun_adet'] . " Adet" ?></td>
                                                     <td>$ <?php echo number_format((float)$uruncek['urun_fiyat'], 2, ".", "") ?></td>
-                                                    <td><a href="admin/nesting/islem.php?sepet_sil=ok&sepet_id=<?php echo $value['sepet_id']."&url=$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>"><i class="fa fa-times-circle fa-2x"></i></a></td>
+                                                    <td><a href="admin/nesting/islem.php?sepet_sil=ok&sepet_id=<?php echo $value['sepet_id'] . "&url=$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>"><i class="fa fa-times-circle fa-2x"></i></a></td>
                                                 </tr>
                                             <?php } ?>
                                         <?php } else { ?>

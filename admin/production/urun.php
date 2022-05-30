@@ -70,7 +70,11 @@ $uruncek = $urunsor->fetchAll(PDO::FETCH_ASSOC);
                   <tr>
                     <td width='20'><?php echo $key ?></td>
                     <td class="text-center">
-                      <p>Resim Yüklü Değil</p>
+                      <?php if (!empty($value['urun_photo'])) { ?>
+                        <img width="100" src="../../<?php echo $value['urun_photo'] ?>">
+                      <?php } else { ?>
+                        <p>Resim Yüklü Değil</p>
+                      <?php } ?>
                     </td>
                     <td><?php echo $value['urun_ad'] ?></td>
                     <td><?php echo $value['urun_stok'] ?></td>
@@ -78,7 +82,7 @@ $uruncek = $urunsor->fetchAll(PDO::FETCH_ASSOC);
                     <td class="text-center"><?php echo $value['urun_durum'] ? '<button class="btn btn-xs btn-success">Aktif</button>' : '<button class="btn btn-xs btn-danger">Pasif</button>' ?></td>
                     <td class="text-center"><?php echo $value['urun_onecikar'] ? "<a href='../nesting/islem.php?urun_hizlionecikar=1&urun_id=$value[urun_id]' class='btn btn-xs btn-success'>Öne çıkar aktif</a>" : "<a href='../nesting/islem.php?urun_hizlionecikar=0&urun_id=$value[urun_id]' class='btn btn-xs btn-danger'>Öne çıkar pasif</a>" ?></td>
                     <td class="text-center"><a href="urun-duzenle.php?urun_id=<?php echo $value['urun_id'] ?>" class="btn btn-xs btn-primary">Düzenle</a></td>
-                    <td class="text-center"><a href="../nesting/islem.php?urunsil=ok&urun_id=<?php echo $value['urun_id'] ?>" class="btn btn-xs btn-danger">Sil</a></td>
+                    <td class="text-center"><a href="../nesting/islem.php?urun_photo=<?php echo $value['urun_photo'] ?>&urunsil=ok&urun_id=<?php echo $value['urun_id'] ?>" class="btn btn-xs btn-danger">Sil</a></td>
 
                   </tr>
                 <?php } ?>

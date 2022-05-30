@@ -165,7 +165,7 @@ if (isset($_POST["userkullaniciguncelle"])) {
 // Ürün kaydetme işlemi işlemleri
 if (isset($_POST["urunkaydet"])) {
 
-    $uploads_dir = '../../dimg/urun';
+    $uploads_dir = '../../dimg/urunphoto';
 
     @$tmp_name = $_FILES['urun_photo']["tmp_name"];
     @$name = $_FILES['urun_photo']["name"];
@@ -243,7 +243,7 @@ if (isset($_POST["yorumduzenle"])) {
 
 
 
-//ürün silme işlemi
+//Yorum Silme İşlemi
 if (isset($_GET["yorumsil"])) {
 
     $yorumsil = $db->prepare("DELETE FROM yorumlar WHERE yorum_id=:yorum_id");
@@ -337,6 +337,21 @@ if (isset($_GET['urun_hizlionecikar'])) {
 
 // Ürün düzenleme işlemleri
 if (isset($_POST["urunduzenle"])) {
+
+    if (!empty($_FILES['urun_photo']["name"])) {
+        $uploads_dir = '../../dimg/urunphoto';
+
+        @$tmp_name = $_FILES['urun_photo']["tmp_name"];
+        @$name = $_FILES['urun_photo']["name"];
+
+        $benzersizsayi4 = rand(20000, 32000);
+        $resimyol = substr($uploads_dir, 6) . "/" . $benzersizsayi4 . $name;
+
+        @move_uploaded_file($tmp_name, "$uploads_dir/$benzersizsayi4$name");
+    } else {
+        $resimyol = $_POST['urun_photo'];
+    }
+
     $seourl = seo($_POST['urun_ad']);
 
     $id = $_POST['urun_id'];
@@ -345,6 +360,7 @@ if (isset($_POST["urunduzenle"])) {
     kategori_id=:kategori_id,
     urun_ad=:urun_ad,
     urun_seourl=:urun_seourl,
+    urun_photo=:urun_photo,
     urun_detay=:urun_detay,
     urun_fiyat=:urun_fiyat,
     urun_video=:urun_video,
@@ -358,6 +374,7 @@ if (isset($_POST["urunduzenle"])) {
         'kategori_id' => $_POST['kategori_id'],
         'urun_ad' => $_POST['urun_ad'],
         'urun_seourl' => $seourl,
+        'urun_photo' => $resimyol,
         'urun_detay' => $_POST['urun_detay'],
         'urun_fiyat' => $_POST['urun_fiyat'],
         'urun_video' => $_POST['urun_video'],
@@ -371,6 +388,10 @@ if (isset($_POST["urunduzenle"])) {
 
 
     if ($update) {
+        if (!empty($_FILES['urun_photo']["name"])) {
+            $resimsilunlink = $_POST['urun_photo'];
+            unlink("../../$resimsilunlink");
+        }
         header("location:../production/urun-duzenle.php?durum=ok&urun_id=" . $_POST['urun_id']);
         exit;
     } else {
@@ -433,6 +454,8 @@ if (isset($_GET["urunsil"])) {
     ]);
 
     if ($durum) {
+        $resimsilunlink = $_GET['urun_photo'];
+        unlink("../../$resimsilunlink");
         header('location:../production/urun.php?durum=ok');
         exit;
     } else {

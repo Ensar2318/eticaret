@@ -1,23 +1,16 @@
 ﻿<?php
 require_once 'header.php';
 $kategoricek = "";
-if (isset($_GET['kategori_id'])) {
-	$urunsor = $db->prepare("SELECT * FROM urun WHERE kategori_id=:kategori_id AND urun_durum=:urun_durum ORDER BY urun_id DESC ");
-	$urunsor->execute([
-		"kategori_id" => $_GET['kategori_id'],
-		"urun_durum" => 1
-	]);
-	$kategorisor = $db->prepare("SELECT * FROM kategori WHERE kategori_id=:kategori_id");
-	$kategorisor->execute([
-		"kategori_id" => $_GET['kategori_id'],
-	]);
-	$kategoricek = $kategorisor->fetch(PDO::FETCH_ASSOC);
+if (isset($_POST['arama'])) {
+
+	$aranan = $_POST['aranan'];
+	$urunsor = $db->prepare("SELECT * FROM urun WHERE urun_ad LIKE ? ");
+	$urunsor->execute(array("%$aranan%"));
+	$urunsay = $urunsor->rowcount();
+	$uruncek = $urunsor->fetchAll(PDO::FETCH_ASSOC);
 } else {
-	$urunsor = $db->prepare("SELECT * FROM urun ORDER BY urun_id DESC ");
-	$urunsor->execute();
+	header("location:index.php");
 }
-$urunsay = $urunsor->rowcount();
-$uruncek = $urunsor->fetchAll(PDO::FETCH_ASSOC);
 
 
 ?>
@@ -34,13 +27,7 @@ $uruncek = $urunsor->fetchAll(PDO::FETCH_ASSOC);
 			<!--Main content-->
 			<div class="title-bg">
 				<div class="title">
-					Kategoriler -
-					<?php if (!empty($kategoricek)) {
-						echo $kategoricek['kategori_ad'];
-					?>
-					<?php } else { ?>
-						All products
-					<?php } ?>
+					Aranan Sonuc
 				</div>
 				<div class="title-nav">
 					<a href="javascript:void(0)"><i class="fa fa-th-large"></i>grid</a>
@@ -50,7 +37,7 @@ $uruncek = $urunsor->fetchAll(PDO::FETCH_ASSOC);
 			<div class="row prdct">
 				<!--Products-->
 				<?php if (!$urunsay) {
-					echo "<h4 class='text-center'>Bu Kategoride Ürün Bulunamadı.</h4>";
+					echo "<h4 class='text-center'>Bu Aramada Ürün Bulunamadı.</h4>";
 				} ?>
 				<?php foreach ($uruncek as $key => $value) { ?>
 					<div class="col-md-4">

@@ -50,13 +50,32 @@ $uruncek = $urunsor->fetch(PDO::FETCH_ASSOC);
           <div class="x_content">
             <br />
 
-            <form action="../nesting/islem.php" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+            <form enctype="multipart/form-data" action="../nesting/islem.php" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
               <div class="form-group" style="display: none;">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">id<span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                   <input value="<?php echo $uruncek['urun_id'] ?>" name="urun_id" type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Mevcut Resim <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input style="display: none;" value="<?php echo $uruncek['urun_photo'] ?>" name="urun_photo" type="text" id="first-name" class="form-control col-md-7 col-xs-12">
+                  <?php if (!empty($uruncek['urun_photo'])) { ?>
+                    <img width="200" src="../../<?php echo $uruncek['urun_photo'] ?>">
+                  <?php } ?>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Resim Seç <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input type="file" id="first-name" name="urun_photo" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 

@@ -41,7 +41,7 @@ if (!$sepetsay) {
 					?>
 						<tr>
 
-							<td><img src="images\demo-img.jpg" width="100" alt=""></td>
+							<td><img src="<?php echo $uruncek['urun_photo'] ?>" width="100" alt=""></td>
 							<td><?php echo $uruncek['urun_ad'] ?></td>
 							<td><?php echo $uruncek['urun_id'] ?></td>
 							<td>

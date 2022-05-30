@@ -34,7 +34,7 @@ $uruncek = $urunsor->fetchAll(PDO::FETCH_ASSOC);
 						<div class="productwrap" style="height: 370px;">
 							<div class="pr-img">
 								<div class="hot"></div>
-								<a href="<?php echo "urun-" . $value['urun_seourl'] . "-" . $value['urun_id'] ?>"><img src="images/inosuke.png" alt="" class="img-responsive"></a>
+								<a href="<?php echo "urun-" . $value['urun_seourl'] . "-" . $value['urun_id'] ?>"><img src="<?php echo $value['urun_photo'] ?>" alt="" class="img-responsive"></a>
 								<div class="pricetag blue">
 									<div class="inner"><span><?php echo $value['urun_fiyat'] . " $" ?></span></div>
 								</div>
