@@ -162,8 +162,18 @@ if (isset($_POST["userkullaniciguncelle"])) {
     }
 }
 
-// Ürün düzenleme işlemleri
+// Ürün kaydetme işlemi işlemleri
 if (isset($_POST["urunkaydet"])) {
+
+    $uploads_dir = '../../dimg/urun';
+
+    @$tmp_name = $_FILES['urun_photo']["tmp_name"];
+    @$name = $_FILES['urun_photo']["name"];
+
+    $benzersizsayi4 = rand(20000, 32000);
+    $resimyol = substr($uploads_dir, 6) . "/" . $benzersizsayi4 . $name;
+
+    @move_uploaded_file($tmp_name, "$uploads_dir/$benzersizsayi4$name");
 
     $seourl = seo($_POST['urun_ad']);
     $id = $_POST['urun_id'];
@@ -172,6 +182,7 @@ if (isset($_POST["urunkaydet"])) {
     kategori_id=:kategori_id,
     urun_ad=:urun_ad,
     urun_seourl=:urun_seourl,
+    urun_photo=:urun_photo,
     urun_detay=:urun_detay,
     urun_fiyat=:urun_fiyat,
     urun_video=:urun_video,
@@ -184,6 +195,7 @@ if (isset($_POST["urunkaydet"])) {
         'kategori_id' => $_POST['kategori_id'],
         'urun_ad' => $_POST['urun_ad'],
         'urun_seourl' => $seourl,
+        'urun_photo' => $resimyol,
         'urun_detay' => $_POST['urun_detay'],
         'urun_fiyat' => $_POST['urun_fiyat'],
         'urun_video' => $_POST['urun_video'],

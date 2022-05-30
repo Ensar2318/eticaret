@@ -56,7 +56,7 @@ if (!$say) {
 					?>
 						<tr>
 							<td>
-								<form><input type="checkbox"></form>
+								<form><input value="test" class="urun_toplusil" name="urun_toplusil" type="checkbox"></form>
 							</td>
 							<td><img src="images\demo-img.jpg" width="100" alt=""></td>
 							<td><?php echo $uruncek['urun_ad'] ?></td>
@@ -82,7 +82,7 @@ if (!$say) {
 	</div>
 	<div class="row">
 		<div class="col-md-6">
-
+		
 		</div>
 		<?php if ($sepetsay) { ?>
 			<div class="col-md-3 col-md-offset-3">

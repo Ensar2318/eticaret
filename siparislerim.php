@@ -38,6 +38,8 @@ $siparisSay = $siparisSor->rowCount();
 					<th>Sipariş No</th>
 					<th>Tarih</th>
 					<th>Tutar</th>
+					<th>Ödeme Tip</th>
+					<th>Durum</th>
 					<th>Detay</th>
 
 				</tr>
@@ -48,6 +50,8 @@ $siparisSay = $siparisSor->rowCount();
 						<td><?php echo $value['siparis_id'] ?></td>
 						<td><?php echo $value['siparis_zaman'] ?></td>
 						<td><?php echo $value['siparis_toplam'] ?> $</td>
+						<td><?php echo $value['siparis_tip'] ?></td>
+						<td><?php echo $value['siparis_odeme'] ? " <a style='color:white;' href='#' class='btn btn-small btn-success'>Ödendi</a> ":"<a style='color:white;' href='#' class='btn btn-xs btn-danger'>Ödenmedi</a>" ?></td>
 						<td><a style="color: white;" class="btn btn-xs btn-primary" href="siparis-detay.php?siparis_id=<?php echo $value['siparis_id'] ?>">Detay</a></td>
 					</tr>
 				<?php } ?>

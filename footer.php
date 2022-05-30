@@ -134,6 +134,7 @@
 <!-- custom js -->
 <script src="js\shop.js"></script>
 </div>
+<script src="js/my.js"></script>
 </body>
 
 </html>

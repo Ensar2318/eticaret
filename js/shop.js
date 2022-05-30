@@ -145,4 +145,7 @@ jQuery(document).ready(function($) {
 		$('#score').raty({ readOnly: true, score: 3 });
 	});
 
+
+
+
 });

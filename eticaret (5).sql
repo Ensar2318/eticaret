@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: localhost
--- Üretim Zamanı: 29 May 2022, 19:49:14
+-- Üretim Zamanı: 30 May 2022, 16:36:50
 -- Sunucu sürümü: 8.0.17
 -- PHP Sürümü: 7.3.10
 
@@ -72,10 +72,10 @@ INSERT INTO `ayar` (`ayar_id`, `ayar_logo`, `ayar_title`, `ayar_description`, `a
 
 CREATE TABLE `banka` (
   `banka_id` int(11) NOT NULL,
-  `banka_ad` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
-  `banka_iban` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
+  `banka_ad` varchar(50) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
+  `banka_iban` varchar(50) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
   `banka_hesapadsoyad` varchar(50) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
-  `banka_durum` enum('0','1') COLLATE utf8_turkish_ci NOT NULL DEFAULT '1'
+  `banka_durum` enum('0','1') CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 --
@@ -221,8 +221,7 @@ CREATE TABLE `sepet` (
 
 INSERT INTO `sepet` (`sepet_id`, `kullanici_id`, `urun_id`, `urun_adet`) VALUES
 (56, 16, 13, 1),
-(61, 16, 8, 1),
-(89, 12, 14, 1);
+(61, 16, 8, 1);
 
 -- --------------------------------------------------------
 
@@ -236,9 +235,9 @@ CREATE TABLE `siparis` (
   `siparis_no` int(11) DEFAULT NULL,
   `kullanici_id` int(11) NOT NULL,
   `siparis_toplam` float(9,2) NOT NULL,
-  `siparis_tip` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
-  `siparis_banka` varchar(50) COLLATE utf8_turkish_ci NOT NULL,
-  `siparis_odeme` enum('0','1') COLLATE utf8_turkish_ci NOT NULL DEFAULT '0'
+  `siparis_tip` varchar(50) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
+  `siparis_banka` varchar(50) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
+  `siparis_odeme` enum('0','1') CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 --
@@ -247,7 +246,8 @@ CREATE TABLE `siparis` (
 
 INSERT INTO `siparis` (`siparis_id`, `siparis_zaman`, `siparis_no`, `kullanici_id`, `siparis_toplam`, `siparis_tip`, `siparis_banka`, `siparis_odeme`) VALUES
 (40, '2022-05-29 17:42:07', NULL, 12, 1800.99, 'Banka Havalesi', 'Deniz Bank', '0'),
-(7500, '2022-05-29 17:45:59', NULL, 12, 1924.00, 'Banka Havalesi', 'Deniz Bank', '0');
+(7500, '2022-05-29 17:45:59', NULL, 12, 1924.00, 'Banka Havalesi', 'Deniz Bank', '0'),
+(7501, '2022-05-30 13:15:21', NULL, 12, 1593.94, 'Banka Havalesi', 'iş bankası', '0');
 
 -- --------------------------------------------------------
 
@@ -274,7 +274,11 @@ INSERT INTO `siparisdetay` (`siparisdetay_id`, `siparis_id`, `urun_id`, `urun_fi
 (39, 7500, 6, 75.00, 1),
 (40, 7500, 12, 33.00, 3),
 (41, 7500, 4, 750.00, 1),
-(42, 7500, 2, 200.00, 5);
+(42, 7500, 2, 200.00, 5),
+(43, 7501, 14, 44.00, 1),
+(44, 7501, 14, 44.00, 1),
+(45, 7501, 7, 250.99, 1),
+(46, 7501, 7, 250.99, 5);
 
 -- --------------------------------------------------------
 
@@ -313,6 +317,7 @@ CREATE TABLE `urun` (
   `urun_id` int(11) NOT NULL,
   `kategori_id` int(11) NOT NULL,
   `urun_zaman` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `urun_photo` varchar(250) COLLATE utf8_turkish_ci NOT NULL,
   `urun_ad` varchar(250) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
   `urun_seourl` varchar(250) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
   `urun_detay` text CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
@@ -328,19 +333,25 @@ CREATE TABLE `urun` (
 -- Tablo döküm verisi `urun`
 --
 
-INSERT INTO `urun` (`urun_id`, `kategori_id`, `urun_zaman`, `urun_ad`, `urun_seourl`, `urun_detay`, `urun_fiyat`, `urun_video`, `urun_keyword`, `urun_stok`, `urun_durum`, `urun_onecikar`) VALUES
-(2, 9, '2022-05-25 10:52:02', 'gomlek Cetece Kontindan', 'gomlek-cetece-kontindan', '<p><strong>lorem ipsum dolor sittlorem ipsum dolor sittlorem ipsum dolor sitt</strong></p>', 200.00, 'exSDnhwmteQ', 'karamela', 101, '1', ''),
-(3, 2, '2022-05-25 12:36:28', 'Taze yeşil gömlek', 'taze-yesil-gomlek', '<p>the god of the empire fon the station keyframe of the man heard placehold</p>', 250.00, '', 'GODSPART', 0, '1', ''),
-(4, 1, '2022-05-25 12:37:41', 'Spartian Shoes', 'spartian-shoes', '<p>Spartian Shoes Flankies Band Of The Panties</p>', 750.00, '', 'Trakiens', 35, '1', '1'),
-(5, 2, '2022-05-25 13:07:54', 'Lüks gömlek fiyaka', 'luks-gomlek-fiyaka', '<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 50.00, '', 'Kasket Video games', 99, '1', '1'),
-(6, 9, '2022-05-25 10:52:02', 'gomlek Cetece Kontindan', 'gomlek-cetece-kontindan', '<p><strong>lorem ipsum dolor sittlorem ipsum dolor sittlorem ipsum dolor sitt</strong></p>', 75.00, 'Zk2VhA', 'karamela', 101, '1', '1'),
-(7, 9, '2022-05-25 12:36:28', 'Allah Version 1.0', 'allah-version-1-0', '<p>the god of the empire fon the station keyframe of the man heard placehold</p>', 250.99, '', 'GODSPART', 1, '1', '1'),
-(8, 1, '2022-05-25 12:37:41', 'mavi ayakakbı', 'mavi-ayakkabi', '<p>Spartian Shoes Flankies Band Of The Panties</p>', 750.00, '', 'Trakiens', 35, '1', ''),
-(10, 2, '2022-05-25 14:14:48', 'san sebastiano', 'san-sebastiano', '<p>Den peke</p>', 12.00, '', 'mastif', 1, '1', '0'),
-(11, 8, '2022-05-25 14:33:42', 'kırmızı sapka', 'kirmizi-sapka', '<p>falan filan</p>', 150.00, '', 'sapka kırmızı', 5, '1', '0'),
-(12, 3, '2022-05-26 09:21:58', 'gomlek Cetece Kontindan', 'gomlek-cetece-kontindan', '<p>asdasd</p>', 33.00, '', 'rafa ', 1, '1', '0'),
-(13, 2, '2022-05-26 12:47:27', 'yeni gelen saydam gömlek', 'yeni-gelen-saydam-gomlek', '<p>Allahu ekber Lore m ipsm dolor akkesessrıra</p>', 150.00, 'a6xXLw0au-c', 'fafa', 50, '1', '0'),
-(14, 2, '2022-05-26 13:03:27', 'fakir', 'fakir', '<p>23123213</p>', 44.00, '44', '44', 44, '1', '0');
+INSERT INTO `urun` (`urun_id`, `kategori_id`, `urun_zaman`, `urun_photo`, `urun_ad`, `urun_seourl`, `urun_detay`, `urun_fiyat`, `urun_video`, `urun_keyword`, `urun_stok`, `urun_durum`, `urun_onecikar`) VALUES
+(12, 3, '2022-05-26 09:21:58', '', 'gomlek Cetece Kontindan', 'gomlek-cetece-kontindan', '<p>asdasd</p>', 33.00, '', 'rafa ', 1, '1', '0'),
+(13, 2, '2022-05-26 12:47:27', '', 'yeni gelen saydam gömlek', 'yeni-gelen-saydam-gomlek', '<p>Allahu ekber Lore m ipsm dolor akkesessrıra</p>', 150.00, 'a6xXLw0au-c', 'fafa', 50, '1', '0'),
+(14, 2, '2022-05-26 13:03:27', '', 'fakir', 'fakir', '<p>23123213</p>', 44.00, '44', '44', 44, '1', '0'),
+(17, 8, '2022-05-30 15:23:49', 'dimg/urun/31149', 'asdsad', 'asdsad', '<p>adsadsad</p>', 4.00, '', '4', 4, '1', '0'),
+(18, 2, '2022-05-30 15:32:32', 'dimg/urun/28698', '2', '2', '<p>2</p>', 2.00, '2', '2', 2, '1', '0');
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `urunfoto`
+--
+
+CREATE TABLE `urunfoto` (
+  `urunfoto_id` int(11) NOT NULL,
+  `urun_id` int(11) NOT NULL,
+  `urunfoto_resimyol` varchar(255) COLLATE utf8_turkish_ci NOT NULL,
+  `urunfoto_sira` int(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 -- --------------------------------------------------------
 
@@ -354,7 +365,7 @@ CREATE TABLE `yorumlar` (
   `urun_id` int(11) NOT NULL,
   `yorum_detay` text CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL,
   `yorum_zaman` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `yorum_durum` enum('0','1') COLLATE utf8_turkish_ci NOT NULL
+  `yorum_durum` enum('0','1') CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 --
@@ -439,6 +450,12 @@ ALTER TABLE `urun`
   ADD PRIMARY KEY (`urun_id`);
 
 --
+-- Tablo için indeksler `urunfoto`
+--
+ALTER TABLE `urunfoto`
+  ADD PRIMARY KEY (`urunfoto_id`);
+
+--
 -- Tablo için indeksler `yorumlar`
 --
 ALTER TABLE `yorumlar`
@@ -476,31 +493,37 @@ ALTER TABLE `menu`
 -- Tablo için AUTO_INCREMENT değeri `sepet`
 --
 ALTER TABLE `sepet`
-  MODIFY `sepet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `sepet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `siparis`
 --
 ALTER TABLE `siparis`
-  MODIFY `siparis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7501;
+  MODIFY `siparis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7502;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `siparisdetay`
 --
 ALTER TABLE `siparisdetay`
-  MODIFY `siparisdetay_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `siparisdetay_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `slider`
 --
 ALTER TABLE `slider`
-  MODIFY `slider_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `slider_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `urun`
 --
 ALTER TABLE `urun`
-  MODIFY `urun_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `urun_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- Tablo için AUTO_INCREMENT değeri `urunfoto`
+--
+ALTER TABLE `urunfoto`
+  MODIFY `urunfoto_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `yorumlar`
